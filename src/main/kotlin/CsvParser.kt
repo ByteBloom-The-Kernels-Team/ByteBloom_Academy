@@ -1,5 +1,7 @@
+package models
 import models.TeamRaw
 import java.io.File
+
 /**
  * Parses teams.csv file and returns list of TeamRaw objects
  * @return List of TeamRaw objects
