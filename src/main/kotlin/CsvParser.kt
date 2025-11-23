@@ -1,22 +1,29 @@
 import models.TeamRaw
 import java.io.File
-/**
- * Parses teams.csv file and returns list of TeamRaw objects
- * @return List of TeamRaw objects
- */
-fun parseTeamData(): List<TeamRaw> {
-    val lines = File("src/main/resources/teams.csv").readLines()
-    return lines.drop(1) // Skip header row
-        .mapNotNull { lines ->
-            val parts = lines.split(",")
-            if (parts.size >= 3) {
+
+val csvfiles = File("src/main/resources/teams.csv").readLines()
+
+// This function to parse team data.
+fun parseTeamData(): List<TeamRaw>? {
+
+    // Check if the file isExists or not.
+    if (!csvfiles.isEmpty()){
+        println("This file not exists.")
+        return emptyList()
+    }
+
+    // Read the file  and data processing.
+    return csvfiles.drop(1) // Skip header row
+        .map { line ->
+            val teamParts = line.split(",")
+            if (teamParts.size >= 3) {
                 TeamRaw(
-                    teamId = parts[0].trim(),
-                    teamName = parts[1].trim(),
-                    mentorLead = parts[2].trim()
+                    teamId = teamParts[0].trim(),
+                    teamName = teamParts[1].trim(),
+                    mentorLead = teamParts[2].trim()
                 )
             } else {
-                null // Skip invalid rows
+                return null
             }
         }
 }
