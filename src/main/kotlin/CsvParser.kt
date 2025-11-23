@@ -1,14 +1,14 @@
 package models
 import models.TeamRaw
 import java.io.File
-val csvMenteeFile  = File("src/main/resources/mentees.csv").readLines()
+
 /**
  * Parses teams.csv file and returns list of TeamRaw objects
  * @return List of TeamRaw objects
  */
 fun parseTeamData(): List<TeamRaw> {
     val lines = File("src/main/resources/teams.csv").readLines()
-    return lines.drop(1) // Skp header row
+    return lines.drop(1) // Skip header row
         .mapNotNull { lines ->
             val parts = lines.split(",")
             if (parts.size >= 3) {
@@ -22,6 +22,13 @@ fun parseTeamData(): List<TeamRaw> {
             }
         }
 }
+/**
+ * Parser functions for reading CSV files and converting to data objects
+ */
+/**
+ * Parses mentees.csv file and returns list of MenteeRaw objects
+ * @return List of MenteeRaw objects
+ */
 
 
 // This function to parse mentee data.
