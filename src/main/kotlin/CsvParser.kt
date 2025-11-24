@@ -22,13 +22,7 @@ fun parseTeamData(): List<TeamRaw> {
             }
         }
 }
-/**
- * Parser functions for reading CSV files and converting to data objects
- */
-/**
- * Parses mentees.csv file and returns list of MenteeRaw objects
- * @return List of MenteeRaw objects
- */
+
 
 
 // This function to parse mentee data.
