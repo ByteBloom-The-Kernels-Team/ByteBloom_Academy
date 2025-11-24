@@ -1,13 +1,9 @@
 package models
-/**
- * Data class representing raw team data from CSV
- * @property teamId Unique identifier for the team
- * @property teamName Name of the team
- * @property mentorLead Lead mentor for the team
- */
+// Raw team data from CSV
 data class TeamRaw(
-    val teamId: String,
-    val teamName: String,
-    val mentorLead: String
+    val id: String,
+    val name: String,
+    val mentor: String
 )
+
 
