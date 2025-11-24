@@ -5,6 +5,7 @@ import models.PerformanceRaw
 import models.TeamRaw
 import models.MenteeRaw
 import java.io.File
+
 // Constants: read CSV files once
 val teamFileLines = File("src/main/resources/teams.csv").readLines()
 val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
@@ -27,7 +28,7 @@ fun parseTeamData(): List<TeamRaw>? {
     return teamFileLines.drop(1) // Skip header row
         .map { line ->
             val teamParts = line.split(",")
-            if (parts.size >= 3) {
+            if (teamParts.size >= 3) {
                 TeamRaw(
                     id = parts[0].trim(),
                     name = parts[1].trim(),
@@ -38,12 +39,6 @@ fun parseTeamData(): List<TeamRaw>? {
             }
         }
 }
-
-/**
- * Parses mentees.csv file and returns list of MenteeRaw objects
- * @return List of MenteeRaw objects
- */
-
 
 // This function to parse mentee data.
 fun parseMenteeData(): List<MenteeRaw> {
