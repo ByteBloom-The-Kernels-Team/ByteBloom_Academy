@@ -1,7 +1,7 @@
 package models
 import models.TeamRaw
 import java.io.File
-
+val menteeFileLines =File("src/main/resources/mentees.csv").readLines()
 /**
  * Parses teams.csv file and returns list of TeamRaw objects
  * @return List of TeamRaw objects
