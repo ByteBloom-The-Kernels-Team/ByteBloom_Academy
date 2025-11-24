@@ -40,20 +40,25 @@ fun parseTeamData(): List<TeamRaw>? {
         }
 }
 
-// This function to parse mentee data.
-fun parseMenteeData(): List<MenteeRaw> {
-    val lines = File("src/main/resources/mentees.csv").readLines()
-    return lines.drop(1) // Skip header row
-        .mapNotNull { line ->
-            val parts = line.split(",")
-            if (parts.size >= 3) {
-                val (id, name, team) = parts.map { it.trim() }
-                MenteeRaw(id, name, team)
+// Parse team data from teams.csv
+fun parseTeamData(): List<TeamRaw>? {
+    if (!validateFile(teamFileLines, "teams.csv")) return emptyList()
+
+    return teamFileLines.drop(1) // Skip header row
+        .map { line ->
+            val teammenteeParts = line.split(",")
+            if (menteeParts.size >= 3) {
+                TeamRaw(
+                    id = menteeParts[0].trim(),
+                    name = menteeParts[1].trim(),
+                    mentorLead = menteeParts[2].trim()
+                )
             } else {
-                null // Skip invalid rows
+                null
             }
         }
 }
+
 
  // Parse performance data from performance.csv
 fun parsePerformanceData(): List<PerformanceRaw>? {
