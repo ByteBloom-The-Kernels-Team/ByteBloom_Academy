@@ -1,7 +1,4 @@
 
-// Main entry point for the ByteBloom Ecosystem application
-// Demonstrates parsing CSV files and counting records
-
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
     println("✅ Project setup is correct and runnable.")
