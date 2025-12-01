@@ -58,7 +58,7 @@ fun parseTeamData(): List<TeamRaw> {
 }
 
 
-// Parse mentee data from teams.csv
+// Parse mentee data from teams csv
 fun parseMenteeData(): List<MenteeRaw> {
     return menteeFileLines
         .drop(1)
