@@ -11,74 +11,69 @@ val teamFileLines = File("src/main/resources/teams.csv").readLines()
 val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
 val performanceFileLines = File("src/main/resources/performance.csv").readLines()
 
-// Utility function to check if file lines are empty
-fun validateFile(lines: List<String>, fileName: String): Boolean {
-    if (lines.isEmpty()) {
-        println("File $fileName does not exist or is empty.")
-        return false
-    }
-    return true
+
+
+// Convert one CSV line into TeamRaw
+fun parseTeamCsvLine(line: String): TeamRaw? {
+    val teamParts = line.split(",")
+    if (teamParts.size < 3) return null
+
+    return TeamRaw(
+        teamParts[0].trim(),
+        teamParts[1].trim(),
+        teamParts[2].trim()
+    )
 }
 
+// Convert one CSV line into MenteeRaw
+fun parseMenteeCsvLine(line: String): MenteeRaw? {
+    val menteeParts = line.split(",")
+    if (menteeParts.size < 3) return null
+
+    return MenteeRaw(
+        menteeParts[0].trim(),
+        menteeParts[1].trim(),
+        menteeParts[2].trim()
+    )
+}
+
+// Convert one CSV line into PerformanceRaw
+fun parsePerformanceCsvLine(line: String): PerformanceRaw? {
+    val performanceParts = line.split(",")
+    if (performanceParts.size < 4) return null
+
+    return PerformanceRaw(
+        performanceParts[0].trim(),
+        performanceParts[1].trim(),
+        performanceParts[2].trim(),
+        performanceParts[3].trim()
+    )
+}
 
 // Parse team data from teams.csv
-fun parseTeamData(): List<TeamRaw>? {
-    if (!validateFile(teamFileLines, "teams.csv")) return emptyList()
-
-    return teamFileLines.drop(1) // Skip header row
-        .map { line ->
-            val teamParts = line.split(",")
-            if (teamParts.size >= 3) {
-                TeamRaw(
-                    id = teamParts[0].trim(),
-                    name = teamParts[1].trim(),
-                    mentorLead = teamParts[2].trim()
-                )
-            } else {
-                null
-            }
-        }
+fun parseTeamData(): List<TeamRaw> {
+    return teamFileLines
+        .drop(1)
+        .mapNotNull { line -> parseTeamCsvLine(line) }
 }
 
-// Parse team data from teams.csv
-fun parseMenteeData(): List<MenteeRaw>? {
-    if (!validateFile(menteeFileLines, "mentees.csv")) return emptyList()
 
-    return menteeFileLines.drop(1) // Skip header row
-        .map { line ->
-            val menteeParts = line.split(",")
-            if (menteeParts.size >= 3) {
-                MenteeRaw(
-                    id = menteeParts[0].trim(),
-                    name = menteeParts[1].trim(),
-                    teamId = menteeParts[2].trim()
-                )
-            } else {
-                null
-            }
-        }
+// Parse mentee data from teams.csv
+fun parseMenteeData(): List<MenteeRaw> {
+    return menteeFileLines
+        .drop(1)
+        .mapNotNull { line -> parseMenteeCsvLine(line) }
 }
+
 
 
  // Parse performance data from performance.csv
-fun parsePerformanceData(): List<PerformanceRaw>? {
-    if (!validateFile(performanceFileLines, "performance.csv")) return emptyList()
+ fun parsePerformanceData(): List<PerformanceRaw> {
+     return performanceFileLines
+         .drop(1)
+         .mapNotNull { line -> parsePerformanceCsvLine(line) }
+ }
 
-    return performanceFileLines.drop(1) // Skip header row
-        .map { line ->
-            val performanceParts = line.split(",")
-            if (parts.size >= 4) {
-                PerformanceRaw(
-                    menteeId = parts[0].trim(),
-                    submissionId = parts[1].trim(),
-                    submissionType = parts[2].trim(),
-                    score = parts[3].trim()
-                )
-            } else {
-                null
-            }
-        }
-}
 
 
 
