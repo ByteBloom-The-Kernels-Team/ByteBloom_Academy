@@ -11,7 +11,7 @@ class DomainBuilder(
     private val rawMentees: List<MenteeRaw>,
     private val rawSubmissions: List<PerformanceRaw>
 ) {
-private fun buildTeams(rawTeams: List<TeamRaw>): MutableMap<String, Team> {
+    private fun buildTeams(rawTeams: List<TeamRaw>): MutableMap<String, Team> {
         val teamsById = mutableMapOf<String, Team>()
         rawTeams.forEach { teamRaw ->
             val team = Team(
@@ -23,5 +23,5 @@ private fun buildTeams(rawTeams: List<TeamRaw>): MutableMap<String, Team> {
             teamsById[teamRaw.id] = team
         }
         return teamsById 
-}
+  }
 }
