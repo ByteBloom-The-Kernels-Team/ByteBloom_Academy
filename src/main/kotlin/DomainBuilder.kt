@@ -55,18 +55,22 @@ class DomainBuilder(
     }
 
 
-    private fun buildPerformanceSubmissions(rawSubmissions: List<PerformanceRaw>): MutableMap<String, List<PerformanceSubmission>> {
-        val submissionByMentee = mutableMapOf<String, List<PerformanceSubmission>>()
+    private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
+        return PerformanceSubmission(
+            submissionId = submissionRaw.submissionId,
+            type = submissionRaw.submissionType,
+            score = submissionRaw.score
+        )
+    }
 
+    (menteeId -> List<PerformanceSubmission>)
+    private fun buildSubmissionsMap(): Map<String, List<PerformanceSubmission>> {
+        val submissionsByMentee = mutableMapOf<String, MutableList<PerformanceSubmission>>()
         rawSubmissions.forEach { submissionRaw ->
-            val submission = PerformanceSubmission(
-                submissionId = submissionRaw.submissionId,
-                type = submissionRaw.submissionType,
-                score = submissionRaw.score
-            )
-            val currentList = submissionByMentee[submissionRaw.menteeId] ?: emptyList()
-            submissionByMentee[submissionRaw.menteeId] = currentList + submission
+            val submission = buildSubmission(submissionRaw)
+            val submissionsList = submissionsByMentee.getOrPut(submissionRaw.menteeId) { mutableListOf() }
+            submissionsList.add(submission)
         }
-        return submissionByMentee
+        return submissionsByMentee
     }
 }
