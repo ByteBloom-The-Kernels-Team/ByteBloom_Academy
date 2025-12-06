@@ -2,18 +2,44 @@
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
     println("✅ Project setup is correct and runnable.")
-    println("********************************************")
+    println("******************************************************")
 
     println("\n--->>> ByteBloom Ecosystem - Data Parsing Demo <<<---\n")
+    println("\n--->>> Weaving The Domain Graph <<<---\n")
 
-    val mentees = parseMenteeData()
-    println("--->>> Mentee Records Parsed: ${mentees.size}")
+    val teamRawDataRead  = parseTeamData()
+    val menteeRawDataRead  = parseMenteeData()
+    val performanceRawDataRead  = parsePerformanceData()
 
-    val teams = parseTeamData()
-    println("--->>> Team Records Parsed: ${teams.size}")
+    val domainBuilderService = DomainBuilder(
+        teamRawDataRead,
+        menteeRawDataRead,
+        performanceRawDataRead)
 
-    val performances = parsePerformanceData()
-    println("--->>> Performance Records Parsed: ${performances.size}")
+    val domainTeamsBuilt = domainBuilderService.buildDomain()
 
-    println("\n--->>> Parsing completed successfully! <<<---")
+    val teamSelectedForPrinting = domainTeamsBuilt.firstOrNull()
+    // Another way to select a team by ID
+    // val teamSelectedForPrinting = domainTeamsBuilt.find { it.id == "bravo" }
+
+    if (teamSelectedForPrinting == null) {
+        println("--->>> No teams were found in the data!")
+        return
+    }
+
+    println("=================================================")
+    println("\n--->>> Selected Team Details <<<---")
+    println("--->>> Team Name: ${teamSelectedForPrinting.name}")
+    println("--->>> Mentor: ${teamSelectedForPrinting.mentor}")
+    println("\n=================================================")
+    println("\n--->>> Mentees linked to this team <<<---")
+    if (teamSelectedForPrinting.mentees.isEmpty()) {
+        println("--->>> No mentees are linked to this team!")
+    } else {
+        teamSelectedForPrinting.mentees.forEach { mentee ->
+            println("   - Mentee: ${mentee.name} (ID: ${mentee.id})")
+        }
+    }
+    println("\n=================================================")
 }
+
