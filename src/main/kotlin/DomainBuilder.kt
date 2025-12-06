@@ -57,8 +57,8 @@ class DomainBuilder(
 
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
-            submissionId = submissionRaw.submissionId,
-            type = submissionRaw.submissionType,
+            submissionId = submissionRaw.id,
+            type = submissionRaw.type,
             score = submissionRaw.score
         )
     }
