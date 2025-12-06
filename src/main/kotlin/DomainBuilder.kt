@@ -28,7 +28,7 @@ class DomainBuilder(
         return teamsById
     }
 
-    private fun extractTeamId(team:Team):String{
+    private fun extractTeamId(team:Team):String {
         return team.id
     }
 
