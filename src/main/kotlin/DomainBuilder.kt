@@ -63,7 +63,6 @@ class DomainBuilder(
         )
     }
 
-    (menteeId -> List<PerformanceSubmission>)
     private fun buildSubmissionsMap(): Map<String, List<PerformanceSubmission>> {
         val submissionsByMentee = mutableMapOf<String, MutableList<PerformanceSubmission>>()
         rawSubmissions.forEach { submissionRaw ->
