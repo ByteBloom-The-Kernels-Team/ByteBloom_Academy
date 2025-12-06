@@ -28,16 +28,20 @@ class DomainBuilder(
         return teamsById
     }
 
+    private fun extractTeamId(team:Team):String{
+        return team.id
+    }
+
     private fun buildMentee(
         menteeRaw: MenteeRaw,
         team: Team,
         submissions: List<PerformanceSubmission>
     ): Mentee {
         return Mentee(
-            menteeRaw.id,
-            menteeRaw.name,
-            team,
-            submissions
+            id = menteeRaw.id,
+            name = menteeRaw.name,
+            extractTeamId(team),
+            submissions = submissions
         )
     }
 
@@ -57,7 +61,7 @@ class DomainBuilder(
 
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
-            submissionId = submissionRaw.submissionId,
+            id = submissionRaw.submissionId,
             type = submissionRaw.submissionType,
             score = submissionRaw.score
         )
@@ -79,4 +83,5 @@ class DomainBuilder(
         attachMenteesToTeams(teamsMappedById, submissionsMappedByMenteeId)
         return teamsMappedById.values.toList()
     }
+
 }
