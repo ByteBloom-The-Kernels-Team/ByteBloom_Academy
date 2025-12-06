@@ -10,6 +10,7 @@ class DomainBuilder(
     private val rawMentees: List<MenteeRaw>,
     private val rawSubmissions: List<PerformanceRaw>
 ) {
+
     private fun buildTeam(teamRaw: TeamRaw): Team {
         return Team(
             id = teamRaw.id,
@@ -54,7 +55,6 @@ class DomainBuilder(
         }
     }
 
-
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
             submissionId = submissionRaw.submissionId,
@@ -71,5 +71,12 @@ class DomainBuilder(
             submissionsList.add(submission)
         }
         return submissionsByMentee
+    }
+
+    fun buildDomain(): List<Team> {
+        val teamsMappedById = buildTeamsMap()
+        val submissionsMappedByMenteeId = buildSubmissionsMap()
+        attachMenteesToTeams(teamsMappedById, submissionsMappedByMenteeId)
+        return teamsMappedById.values.toList()
     }
 }
