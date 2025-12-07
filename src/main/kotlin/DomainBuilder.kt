@@ -41,6 +41,17 @@ class DomainBuilder(
         )
     }
 
+    private fun addMenteeToTeam(
+        team: Team,
+        menteeRaw: MenteeRaw,
+        submissionsMap: Map<String, List<PerformanceSubmission>>
+    ) {
+        val submissions = submissionsMap[menteeRaw.id] ?: emptyList()
+        val mentee = buildMentee(menteeRaw, team, submissions)
+        team.mentees.add(mentee)
+    }
+
+
     private fun attachMenteesToTeams(
         teamsById: MutableMap<String, Team>,
         submissionsByMentee: Map<String, List<PerformanceSubmission>>
@@ -48,9 +59,7 @@ class DomainBuilder(
         rawMentees.forEach { menteeRaw ->
             val team = teamsById[menteeRaw.teamId]
             if (team != null) {
-                val submissions = submissionsByMentee[menteeRaw.id] ?: emptyList()
-                val mentee = buildMentee(menteeRaw, team, submissions)
-                team.mentees.add(mentee)
+                addMenteeToTeam(team, menteeRaw, submissionsByMentee)
             }
         }
     }
