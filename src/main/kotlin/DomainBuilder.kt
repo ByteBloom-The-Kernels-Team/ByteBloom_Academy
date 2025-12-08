@@ -11,10 +11,6 @@ class DomainBuilder(
     private val rawSubmissions: List<PerformanceRaw>
 ) {
 
-    private fun extractTeamId(team:Team):String {
-        return team.id
-    }
-
     private fun buildTeam(teamRaw: TeamRaw): Team {
         return Team(
             id = teamRaw.id,
@@ -38,10 +34,10 @@ class DomainBuilder(
         submissions: List<PerformanceSubmission>
     ): Mentee {
         return Mentee(
-            id = menteeRaw.id,
-            name = menteeRaw.name,
-            extractTeamId(team),
-            submissions = submissions
+            menteeRaw.id,
+            menteeRaw.name,
+            team,
+            submissions
         )
     }
 
@@ -61,7 +57,7 @@ class DomainBuilder(
 
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
-            id = submissionRaw.submissionId,
+            submissionId = submissionRaw.submissionId,
             type = submissionRaw.submissionType,
             score = submissionRaw.score
         )
@@ -83,5 +79,4 @@ class DomainBuilder(
         attachMenteesToTeams(teamsMappedById, submissionsMappedByMenteeId)
         return teamsMappedById.values.toList()
     }
-
 }
