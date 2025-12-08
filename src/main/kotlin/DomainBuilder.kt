@@ -11,6 +11,10 @@ class DomainBuilder(
     private val rawSubmissions: List<PerformanceRaw>
 ) {
 
+    private fun extractTeamId(team:Team):String {
+        return team.id
+    }
+
     private fun buildTeam(teamRaw: TeamRaw): Team {
         return Team(
             id = teamRaw.id,
@@ -26,10 +30,6 @@ class DomainBuilder(
             teamsById[teamRaw.id] = buildTeam(teamRaw)
         }
         return teamsById
-    }
-
-    private fun extractTeamId(team:Team):String {
-        return team.id
     }
 
     private fun buildMentee(
