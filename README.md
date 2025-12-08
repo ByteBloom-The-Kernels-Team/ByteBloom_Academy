@@ -20,3 +20,32 @@ The goal of this project is to build a robust, well-tested, and professionally a
 -   `build.gradle.kts`: The heart of the project. This file manages dependencies (like JUnit, Koin, etc.) and build settings.
 -   `.gitignore`: Specifies which files and directories to ignore in version control.
 -   `README.md`: This file! The primary documentation for the project.
+
+-   ## Week 3 Additions
+
+During this week, we extended the starter project with new functionality to process and connect raw data into meaningful domain objects. These additions demonstrate the application of design principles and prepare the foundation for future reporting features.
+
+### New Components
+
+-   *Parser Functions:* Added reusable functions (parseTeamData, parseMenteeData, parsePerformanceData) to read and transform raw CSV files into structured data classes (TeamRaw, MenteeRaw, PerformanceRaw).
+-   *DomainBuilder Service:* Implemented the DomainBuilder class to construct the final domain model:
+    -   Builds Team objects from raw data.
+    -   Maps Mentee objects to their respective teams.
+    -   Links PerformanceSubmission records to each mentee.
+-   *Main Program Update:* Simplified Main.kt to:
+    -   Use parser functions instead of manual file reading.
+    -   Build the complete domain ecosystem with DomainBuilder.
+    -   Select and print the first team from the list, showing its mentor and linked mentees.
+    -   Provide an alternative (commented) option to select a team by ID.
+
+### Outcome
+
+-   The system now demonstrates a working *Observer-like relationship* between teams and mentees, where teams act as subjects and mentees are linked observers.
+-   Output is clear and professional, displaying team details and associated mentees in a structured format.
+-   Codebase is cleaner, with consistent naming conventions and reusable components.
+
+-   ---
+
+### The Kernels Team
+
+💙💙 **Keep Creating** 💙💙
