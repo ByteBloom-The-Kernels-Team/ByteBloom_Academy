@@ -36,7 +36,7 @@ class DomainBuilder(
         return Mentee(
             menteeRaw.id,
             menteeRaw.name,
-            team,
+            team.id,
             submissions
         )
     }
