@@ -3,9 +3,9 @@ import models.TeamRaw
 import models.MenteeRaw
 import java.io.File
 
-val teamFileLines = File("src/main/resources/teams.csv").readLines()
-val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
-val performanceFileLines = File("src/main/resources/performance.csv").readLines()
+private val teamFileLines = File("src/main/resources/teams.csv").readLines()
+private val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
+private val performanceFileLines = File("src/main/resources/performance.csv").readLines()
 
 fun validateAndSplit(line: String, expectedSize: Int): List<String>? {
     val parts = line.split(",").map { it.trim() }
