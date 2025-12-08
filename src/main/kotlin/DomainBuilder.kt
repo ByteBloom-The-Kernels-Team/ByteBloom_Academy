@@ -15,7 +15,7 @@ class DomainBuilder(
         return Team(
             id = teamRaw.id,
             name = teamRaw.name,
-            mentor = teamRaw.mentorLead,
+            mentor = teamRaw.mentor,
             mentees = mutableListOf()
         )
     }
@@ -51,7 +51,6 @@ class DomainBuilder(
         team.mentees.add(mentee)
     }
 
-
     private fun attachMenteesToTeams(
         teamsById: MutableMap<String, Team>,
         submissionsByMentee: Map<String, List<PerformanceSubmission>>
@@ -66,7 +65,7 @@ class DomainBuilder(
 
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
-            submissionId = submissionRaw.id,
+            id = submissionRaw.id,
             type = submissionRaw.type,
             score = submissionRaw.score
         )
