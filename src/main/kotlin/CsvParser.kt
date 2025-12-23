@@ -1,11 +1,15 @@
 import models.PerformanceRaw
 import models.TeamRaw
 import models.MenteeRaw
+import models.AttendanceRaw
+import models.ProjectRaw
 import java.io.File
 
 private val teamFileLines = File("src/main/resources/teams.csv").readLines()
 private val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
 private val performanceFileLines = File("src/main/resources/performance.csv").readLines()
+private val attendanceFileLines = File("src/main/resources/attendance.csv").readLines()
+private val projectFileLines = File("src/main/resources/project.csv").readLines()
 
 fun validateAndSplit(line: String, expectedSize: Int): List<String>? {
     val parts = line.split(",").map { it.trim() }
@@ -43,4 +47,31 @@ fun parsePerformanceData(): List<PerformanceRaw> {
     return performanceFileLines
         .drop(1)
         .mapNotNull { line -> parsePerformanceCsvLine(line) }
+}
+fun parseAttendanceCsvLine(line: String): AttendanceRaw? {
+    val attendanceParts = validateAndSplit(line, 4) ?: return null
+    return AttendanceRaw(
+        attendanceParts[0],
+        attendanceParts[1],
+        attendanceParts[2],
+        attendanceParts[3]
+    )
+}
+fun parseAttendanceData(): List<AttendanceRaw> {
+    return attendanceFileLines
+        .drop(1)
+        .mapNotNull { line -> parseAttendanceCsvLine(line) }
+}
+fun parseProjectCsvLine(line: String): ProjectRaw? {
+    val projectParts = validateAndSplit(line, 3) ?: return null
+    return ProjectRaw(
+        projectParts[0],
+        projectParts[1],
+        projectParts[2]
+    )
+}
+fun parseProjectData(): List<ProjectRaw> {
+    return projectFileLines
+        .drop(1)
+        .mapNotNull { line -> parseProjectCsvLine(line) }
 }
