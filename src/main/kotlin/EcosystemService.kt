@@ -93,5 +93,4 @@ class EcosystemService(
             "totalAbsences" to teamAttendances.count { it.status == "absent" }
         )
     }
-
 }
