@@ -14,4 +14,10 @@ class CsvProjectRepository : ProjectRepository {
             )
         }
     }
+    override fun getById(projectId: String): Project? {
+        return getAll().find { it.id == projectId }
+    }
+    override fun getByTeamId(teamId: String): Project? {
+        return getAll().find { it.id == teamId }
+    }
 }
