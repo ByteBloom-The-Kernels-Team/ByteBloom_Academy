@@ -15,5 +15,15 @@ class CsvMenteeRepository : MenteeRepository {
             )
         }
     }
+    override fun getById(id: String): Mentee? {
+        return getAll().find { it.id == id }
+    }
+    override fun getByTeamId(teamId: String): List<Mentee> {
+        return getAll().filter { it.team == teamId }
+    }
+
+    override fun getByName(name: String): List<Mentee> {
+        return getAll().filter { it.name.contains(name, ignoreCase = true) }
+    }
 }
 

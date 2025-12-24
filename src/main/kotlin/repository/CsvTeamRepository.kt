@@ -15,4 +15,10 @@ class CsvTeamRepository : TeamRepository {
             )
         }
     }
+    override fun getById(id: String): Team? {
+        return getAll().find { it.id == id }
+    }
+    override fun getByMentor(mentorName: String): List<Team> {
+        return getAll().filter { it.mentor.contains(mentorName, ignoreCase = true) }
+    }
 }

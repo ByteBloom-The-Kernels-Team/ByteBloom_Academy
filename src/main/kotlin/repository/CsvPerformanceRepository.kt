@@ -14,4 +14,10 @@ class CsvPerformanceRepository : PerformanceRepository {
             )
         }
     }
+    override fun getById(id: String): List<PerformanceSubmission> {
+        return getAll().filter { it.id == id }
+    }
+    override fun getByType(type: String): List<PerformanceSubmission> {
+        return getAll().filter { it.type.equals(type, ignoreCase = true) }
+    }
 }

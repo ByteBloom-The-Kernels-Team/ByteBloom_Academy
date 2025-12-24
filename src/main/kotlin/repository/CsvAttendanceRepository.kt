@@ -1,5 +1,4 @@
 package repository
-
 import domain.Attendance
 import parseAttendanceData
 
@@ -15,5 +14,7 @@ class CsvAttendanceRepository : AttendanceRepository {
             )
         }
     }
+    override fun getByMenteeId(menteeId: String): Attendance? {
+        return getAll().find { it.menteeId == menteeId }
+    }
 }
-
