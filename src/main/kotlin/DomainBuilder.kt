@@ -45,7 +45,7 @@ class DomainBuilder(
         teamsById: MutableMap<String, Team>,
         submissionsByMentee: Map<String, List<PerformanceSubmission>>
     ) {
-        rawMentees.forEach { menteeRaw ->
+        rawMentees.forEach  { menteeRaw ->
             val team = teamsById[menteeRaw.teamId]
             if (team != null) {
                 val submissions = submissionsByMentee[menteeRaw.id] ?: emptyList()
