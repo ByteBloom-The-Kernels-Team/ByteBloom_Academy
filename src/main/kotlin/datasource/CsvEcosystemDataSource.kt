@@ -1,10 +1,10 @@
-package repository
+package datasource
 
-import parseTeamData
-import parseMenteeData
 import parseAttendanceData
+import parseMenteeData
 import parsePerformanceData
 import parseProjectData
+import parseTeamData
 
 class CsvEcosystemDataSource : EcosystemDataSource {
     override fun getTeamsRaw() = parseTeamData()
