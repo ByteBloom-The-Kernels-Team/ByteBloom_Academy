@@ -11,6 +11,7 @@ import Strategy.TeamAttendanceReportByWeek
 import domain.Mentee
 import domain.Project
 import domain.Team
+import domain.SubmissionType
 import repository.AttendanceRepository
 import repository.MenteeRepository
 import repository.PerformanceRepository
@@ -61,7 +62,7 @@ class EcosystemService(
         return averageTeamPerformance.calculateAverage(teamId, mentees, performances)
     }
 
-    fun getPerformanceBreakdownForMentee(menteeId: String): Map<String, List<Double>> {
+    fun getPerformanceBreakdownForMentee(menteeId: String): Map<SubmissionType, List<Double>> {
 
         val performances = performanceRepository.getAll()
         val analyzePerformanceByType = AnalyzePerformanceByType()

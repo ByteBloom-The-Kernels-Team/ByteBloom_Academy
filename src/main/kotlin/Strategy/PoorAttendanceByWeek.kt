@@ -2,11 +2,14 @@ package Strategy
 
 import Strategy.AttendanceStrategy
 import domain.Attendance
+import domain.AttendanceStatus
 
 class PoorAttendanceByWeek: AttendanceStrategy {
     override fun getAttendance(attendances: List<Attendance>): List<String> {
         return attendances
-            .filter { it.week1Status != "Present" || it.week2Status != "Present" || it.week3Status != "Present" }
+            .filter { it.week1Status != AttendanceStatus.PRESENT ||
+                    it.week2Status != AttendanceStatus.PRESENT ||
+                    it.week3Status != AttendanceStatus.PRESENT}
             .map { it.menteeId }
     }
 }
