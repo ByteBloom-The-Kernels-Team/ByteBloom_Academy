@@ -1,6 +1,7 @@
 package repository
 
 import domain.PerformanceSubmission
+import domain.SubmissionType
 import parsePerformanceData
 
 class CsvPerformanceRepository : PerformanceRepository {
@@ -9,7 +10,7 @@ class CsvPerformanceRepository : PerformanceRepository {
         return parsePerformanceData().map { raw ->
             PerformanceSubmission(
                 id = raw.id,
-                type = raw.type,
+                type = mapSubmissionType(raw.type),
                 score = raw.score
             )
         }
@@ -17,7 +18,10 @@ class CsvPerformanceRepository : PerformanceRepository {
     override fun getByMenteeId(id: String): List<PerformanceSubmission> {
         return getAll().filter { it.id == id }
     }
-    override fun getByType(type: String): List<PerformanceSubmission> {
-        return getAll().filter { it.type.equals(type, ignoreCase = true) }
+    override fun getByType(type: SubmissionType): List<PerformanceSubmission> {
+        return getAll().filter { it.type == type }
+    }
+    override fun mapSubmissionType(raw: String): SubmissionType {
+        return SubmissionType.valueOf(raw.uppercase())
     }
 }

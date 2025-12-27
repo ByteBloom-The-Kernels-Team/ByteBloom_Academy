@@ -4,6 +4,7 @@ import models.PerformanceRaw
 import domain.Team
 import domain.Mentee
 import domain.PerformanceSubmission
+import domain.SubmissionType
 
 class DomainBuilder(
     private val rawTeams: List<TeamRaw>,
@@ -58,7 +59,7 @@ class DomainBuilder(
     private fun buildSubmission(submissionRaw: PerformanceRaw): PerformanceSubmission {
         return PerformanceSubmission(
             id = submissionRaw.id,
-            type = submissionRaw.type,
+            type = SubmissionType.valueOf(submissionRaw.type),
             score = submissionRaw.score
         )
     }

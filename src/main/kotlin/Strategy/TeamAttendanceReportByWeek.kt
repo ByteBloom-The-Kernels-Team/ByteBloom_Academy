@@ -4,6 +4,7 @@ import Service.MenteeAttendance
 import domain.Attendance
 import domain.Mentee
 import domain.Team
+import domain.AttendanceStatus
 
 class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
 
@@ -32,9 +33,9 @@ class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
         return MenteeAttendance(
             menteeName = mentee.name,
             weekStatuses = listOf(
-                att?.week1Status ?: "N/A",
-                att?.week2Status ?: "N/A",
-                att?.week3Status ?: "N/A"
+                att?.week1Status?.name ?: "N/A",
+                att?.week2Status?.name ?: "N/A",
+                att?.week3Status?.name ?: "N/A"
             )
         )
     }
