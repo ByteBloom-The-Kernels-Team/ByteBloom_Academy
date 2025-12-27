@@ -1,10 +1,10 @@
-package repository
+package datasource
 
-import models.TeamRaw
-import models.MenteeRaw
 import models.AttendanceRaw
+import models.MenteeRaw
 import models.PerformanceRaw
 import models.ProjectRaw
+import models.TeamRaw
 
 interface EcosystemDataSource {
     fun getTeamsRaw(): List<TeamRaw>
