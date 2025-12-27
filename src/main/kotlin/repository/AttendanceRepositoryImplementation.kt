@@ -1,11 +1,14 @@
 package repository
-import domain.Attendance
-import parseAttendanceData
 
-class CsvAttendanceRepository : AttendanceRepository {
+import domain.Attendance
+import datasource.EcosystemDataSource
+
+class AttendanceRepositoryImplementation(
+    private val dataSource: EcosystemDataSource
+) : AttendanceRepository {
 
     override fun getAll(): List<Attendance> {
-        return parseAttendanceData().map { raw ->
+        return dataSource.getAttendanceRaw().map { raw ->
             Attendance(
                 menteeId = raw.menteeId,
                 week1Status = raw.week1Status,
@@ -14,6 +17,7 @@ class CsvAttendanceRepository : AttendanceRepository {
             )
         }
     }
+
     override fun getByMenteeId(menteeId: String): Attendance? {
         return getAll().find { it.menteeId == menteeId }
     }
