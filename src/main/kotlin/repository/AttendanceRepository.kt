@@ -1,6 +1,7 @@
 package repository
 
 import domain.Attendance
+import domain.AttendanceStatus
 
 interface AttendanceRepository {
     fun getAll(): List<Attendance>

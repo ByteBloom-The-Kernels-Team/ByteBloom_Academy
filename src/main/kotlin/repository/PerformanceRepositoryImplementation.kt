@@ -1,28 +1,27 @@
 package repository
 
 import domain.PerformanceSubmission
-import datasource.EcosystemDataSource
+import domain.SubmissionType
+import parsePerformanceData
 
-class PerformanceRepositoryImplementation(
-    private val dataSource: EcosystemDataSource
-) : PerformanceRepository {
-
+class CsvPerformanceRepository : PerformanceRepository {
 
     override fun getAll(): List<PerformanceSubmission> {
-        return dataSource.getPerformanceRaw().map { raw ->
+        return parsePerformanceData().map { raw ->
             PerformanceSubmission(
                 id = raw.id,
-                type = raw.type,
+                type = mapSubmissionType(raw.type),
                 score = raw.score
             )
         }
     }
-
-    override fun getByMenteeId(id: String): List<PerformanceSubmission> {
-        return getAll().filter { it.id == id }
+    override fun getByMenteeId(menteeId: String): List<PerformanceSubmission> {
+        return getAll().filter { it.id == menteeId }
     }
-
-    override fun getByType(type: String): List<PerformanceSubmission> {
-        return getAll().filter { it.type.equals(type, ignoreCase = true) }
+    override fun getByType(type: SubmissionType): List<PerformanceSubmission> {
+        return getAll().filter { it.type == type }
+    }
+    private fun mapSubmissionType(raw: String): SubmissionType {
+        return SubmissionType.valueOf(raw.uppercase())
     }
 }
