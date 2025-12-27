@@ -1,12 +1,14 @@
 package repository
 
 import domain.Mentee
-import parseMenteeData
+import datasource.EcosystemDataSource
 
-class CsvMenteeRepository : MenteeRepository {
+class MenteeRepositoryImplementation(
+    private val dataSource: EcosystemDataSource
+) : MenteeRepository {
 
     override fun getAll(): List<Mentee> {
-        return parseMenteeData().map { raw ->
+        return dataSource.getMenteesRaw().map { raw ->
             Mentee(
                 id = raw.id,
                 name = raw.name,
@@ -15,9 +17,11 @@ class CsvMenteeRepository : MenteeRepository {
             )
         }
     }
+
     override fun getById(id: String): Mentee? {
         return getAll().find { it.id == id }
     }
+
     override fun getByTeamId(teamId: String): List<Mentee> {
         return getAll().filter { it.team == teamId }
     }

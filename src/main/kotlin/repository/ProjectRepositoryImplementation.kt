@@ -1,12 +1,14 @@
 package repository
 
 import domain.Project
-import parseProjectData
+import datasource.EcosystemDataSource
 
-class CsvProjectRepository : ProjectRepository {
+class ProjectRepositoryImplementation(
+    private val dataSource: EcosystemDataSource
+) : ProjectRepository {
 
     override fun getAll(): List<Project> {
-        return parseProjectData().map { raw ->
+        return dataSource.getProjectsRaw().map { raw ->
             Project(
                 id = raw.id,
                 title = raw.title,
@@ -14,9 +16,11 @@ class CsvProjectRepository : ProjectRepository {
             )
         }
     }
+
     override fun getById(projectId: String): Project? {
         return getAll().find { it.id == projectId }
     }
+
     override fun getByTeamId(teamId: String): Project? {
         return getAll().find { it.id == teamId }
     }
