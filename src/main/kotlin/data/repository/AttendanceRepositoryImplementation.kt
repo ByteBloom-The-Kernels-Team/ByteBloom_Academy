@@ -1,8 +1,8 @@
-package data.rapository
+package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.module.Attendance
-import domain.module.AttendanceStatus
+import domain.models.Attendance
+import domain.models.AttendanceStatus
 import domain.repository.AttendanceRepository
 
 class AttendanceRepositoryImplementation(

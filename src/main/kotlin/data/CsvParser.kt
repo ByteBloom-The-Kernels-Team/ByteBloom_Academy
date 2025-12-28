@@ -1,10 +1,10 @@
 package data
 
-import data.dto.PerformanceRaw
-import data.dto.TeamRaw
-import data.dto.MenteeRaw
-import data.dto.AttendanceRaw
-import data.dto.ProjectRaw
+import data.models.PerformanceRaw
+import data.models.TeamRaw
+import data.models.MenteeRaw
+import data.models.AttendanceRaw
+import data.models.ProjectRaw
 import java.io.File
 
 private val teamFileLines = File("src/main/resources/teams.csv").readLines()

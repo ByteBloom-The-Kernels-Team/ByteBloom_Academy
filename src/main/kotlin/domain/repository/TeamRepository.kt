@@ -1,5 +1,5 @@
 package domain.repository
-import domain.module.Team
+import domain.models.Team
 
 interface TeamRepository {
     fun getAll(): List<Team>

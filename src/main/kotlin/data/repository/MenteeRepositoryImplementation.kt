@@ -1,7 +1,7 @@
-package data.rapository
+package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.module.Mentee
+import domain.models.Mentee
 import domain.repository.MenteeRepository
 
 class MenteeRepositoryImplementation(

@@ -1,7 +1,7 @@
-package data.rapository
+package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.module.Team
+import domain.models.Team
 import domain.repository.TeamRepository
 
 class TeamRepositoryImplementation(

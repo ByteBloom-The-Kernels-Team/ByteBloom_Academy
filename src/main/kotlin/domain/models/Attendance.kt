@@ -1,4 +1,4 @@
-package domain.module
+package domain.models
 
 data class Attendance(
     val menteeId: String,

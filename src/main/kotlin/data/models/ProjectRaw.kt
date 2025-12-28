@@ -1,6 +1,5 @@
-package domain.module
-
-data class Project(
+package data.models
+data class ProjectRaw(
     val id: String,
     val title: String,
     val teamId: String

@@ -1,4 +1,4 @@
-package domain.module
+package domain.models
 
 data class PerformanceSubmission(
     val id: String,

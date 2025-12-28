@@ -1,8 +1,8 @@
-package data.rapository
+package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.module.PerformanceSubmission
-import domain.module.SubmissionType
+import domain.models.PerformanceSubmission
+import domain.models.SubmissionType
 import domain.repository.PerformanceRepository
 
 class PerformanceRepositoryImplementation(

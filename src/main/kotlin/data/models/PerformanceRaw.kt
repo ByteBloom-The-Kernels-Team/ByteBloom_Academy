@@ -1,4 +1,4 @@
-package data.dto
+package data.models
 data class PerformanceRaw(
     val id: String,
     val type: String,

@@ -1,7 +1,7 @@
-package data.rapository
+package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.module.Project
+import domain.models.Project
 import domain.repository.ProjectRepository
 
 class ProjectRepositoryImplementation(

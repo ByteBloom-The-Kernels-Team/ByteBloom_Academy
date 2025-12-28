@@ -1,6 +1,6 @@
 package domain.strategy.project
 
-import domain.module.Project
+import domain.models.Project
 
 class ProjectByTeamId: ProjectSelectionStrategy {
     override fun findProjectForTeam(

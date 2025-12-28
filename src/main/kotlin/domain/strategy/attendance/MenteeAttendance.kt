@@ -1,4 +1,4 @@
-package service
+package domain.strategy.attendance
 
 data class MenteeAttendance(
     val menteeName: String,
