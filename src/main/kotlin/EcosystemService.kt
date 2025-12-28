@@ -1,13 +1,8 @@
-import domain.Attendance
-import domain.Mentee
-import domain.PerformanceSubmission
-import domain.Project
-import domain.Team
-import repository.AttendanceRepository
-import repository.MenteeRepository
-import repository.PerformanceRepository
-import repository.ProjectRepository
-import repository.TeamRepository
+import domain.repository.AttendanceRepository
+import domain.repository.MenteeRepository
+import domain.repository.PerformanceRepository
+import domain.repository.ProjectRepository
+import domain.repository.TeamRepository
 
 class EcosystemService(
     private val teamRepository: TeamRepository,

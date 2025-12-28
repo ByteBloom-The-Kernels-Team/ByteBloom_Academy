@@ -1,6 +1,6 @@
 # The ByteBloom Ecosystem - Official Project Starter
 
-Welcome to the official starter project for the ByteBloom Academy's Kotlin Software Engineering mentorship program. This repository contains the foundational code and data assets for your team's main project.
+Welcome to the official starter project for the ByteBloom Academy's Kotlin Software Engineering mentorship program. This domain.repository contains the foundational code and data assets for your team's main project.
 
 ## Project Vision
 
@@ -28,7 +28,7 @@ During this week, we extended the starter project with new functionality to proc
 ### New Components
 
 -   *Parser Functions:* Added reusable functions (parseTeamData, parseMenteeData, parsePerformanceData) to read and transform raw CSV files into structured data classes (TeamRaw, MenteeRaw, PerformanceRaw).
--   *DomainBuilder Service:* Implemented the DomainBuilder class to construct the final domain model:
+-   *DomainBuilder service:* Implemented the DomainBuilder class to construct the final domain model:
     -   Builds Team objects from raw data.
     -   Maps Mentee objects to their respective teams.
     -   Links PerformanceSubmission records to each mentee.
