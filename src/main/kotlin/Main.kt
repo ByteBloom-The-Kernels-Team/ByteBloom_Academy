@@ -1,3 +1,6 @@
+import data.parseMenteeData
+import data.parsePerformanceData
+import data.parseTeamData
 
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
