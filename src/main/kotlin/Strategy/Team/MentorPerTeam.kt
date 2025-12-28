@@ -1,5 +1,6 @@
-package Strategy
+package Strategy.Team
 
+import Strategy.Team.MentorSearchStrategy
 import domain.Mentee
 import domain.Team
 

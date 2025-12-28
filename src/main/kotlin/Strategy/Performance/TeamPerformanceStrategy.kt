@@ -1,4 +1,4 @@
-package Strategy
+package Strategy.Performance
 
 import domain.Mentee
 import domain.PerformanceSubmission

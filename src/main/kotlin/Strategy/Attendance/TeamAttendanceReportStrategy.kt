@@ -1,4 +1,4 @@
-package Strategy
+package Strategy.Attendance
 
 import Service.MenteeAttendance
 import domain.Attendance

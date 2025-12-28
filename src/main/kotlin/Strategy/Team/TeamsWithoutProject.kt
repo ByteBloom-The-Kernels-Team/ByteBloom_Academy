@@ -1,5 +1,6 @@
-package Strategy
+package Strategy.Team
 
+import Strategy.Team.TeamSelectionStrategy
 import domain.Project
 import domain.Team
 

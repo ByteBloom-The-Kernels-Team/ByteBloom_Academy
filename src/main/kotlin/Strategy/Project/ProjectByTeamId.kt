@@ -1,5 +1,6 @@
-package Strategy
+package Strategy.Project
 
+import Strategy.Project.ProjectSelectionStrategy
 import domain.Project
 
 class ProjectByTeamId: ProjectSelectionStrategy {

@@ -1,4 +1,4 @@
-package Strategy;
+package Strategy.Team
 
 import domain.Project
 import domain.Team

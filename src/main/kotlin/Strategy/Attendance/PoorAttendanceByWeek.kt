@@ -1,6 +1,5 @@
-package Strategy
+package Strategy.Attendance
 
-import Strategy.AttendanceStrategy
 import domain.Attendance
 import domain.AttendanceStatus
 

@@ -1,4 +1,4 @@
-package Strategy
+package Strategy.Team
 
 import domain.Mentee
 import domain.Team
