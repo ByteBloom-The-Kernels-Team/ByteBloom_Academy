@@ -1,10 +1,10 @@
-package Strategy
+package Strategy.Attendance
 
 import Service.MenteeAttendance
+import Strategy.Attendance.TeamAttendanceReportStrategy
 import domain.Attendance
 import domain.Mentee
 import domain.Team
-import domain.AttendanceStatus
 
 class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
 

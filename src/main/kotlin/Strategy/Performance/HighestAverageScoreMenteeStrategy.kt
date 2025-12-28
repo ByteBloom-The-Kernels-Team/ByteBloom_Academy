@@ -1,6 +1,6 @@
-package Strategy
+package Strategy.Performance
 
-import Strategy.TopScoringMenteeStrategy
+import Strategy.Performance.TopScoringMenteeStrategy
 import domain.Mentee
 import domain.PerformanceSubmission
 

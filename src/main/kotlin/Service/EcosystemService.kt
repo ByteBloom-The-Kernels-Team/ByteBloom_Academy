@@ -1,13 +1,13 @@
 package Service
 
-import Strategy.AnalyzePerformanceByType
-import Strategy.MentorPerTeam
-import Strategy.ProjectByTeamId
-import Strategy.TeamSelectionStrategy
-import Strategy.AverageTeamPerformance
-import Strategy.PerfectAttendanceByWeek
-import Strategy.PoorAttendanceByWeek
-import Strategy.TeamAttendanceReportByWeek
+import Strategy.Performance.AnalyzePerformanceByType
+import Strategy.Team.MentorPerTeam
+import Strategy.Project.ProjectByTeamId
+import Strategy.Team.TeamSelectionStrategy
+import Strategy.Performance.AverageTeamPerformance
+import Strategy.Attendance.PerfectAttendanceByWeek
+import Strategy.Attendance.PoorAttendanceByWeek
+import Strategy.Attendance.TeamAttendanceReportByWeek
 import domain.Mentee
 import domain.Project
 import domain.Team
