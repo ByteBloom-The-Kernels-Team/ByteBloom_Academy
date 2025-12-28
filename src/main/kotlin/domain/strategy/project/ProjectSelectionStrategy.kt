@@ -1,6 +1,6 @@
 package domain.strategy.project
 
-import domain.module.Project
+import domain.models.Project
 
 interface ProjectSelectionStrategy {
     fun findProjectForTeam(

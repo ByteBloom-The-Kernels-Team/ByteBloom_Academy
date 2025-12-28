@@ -1,7 +1,7 @@
 package domain.strategy.performance
 
-import domain.module.Mentee
-import domain.module.PerformanceSubmission
+import domain.models.Mentee
+import domain.models.PerformanceSubmission
 
 class AverageTeamPerformance: TeamPerformanceStrategy {
     override fun calculateAverage(

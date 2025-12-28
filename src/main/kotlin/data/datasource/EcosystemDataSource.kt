@@ -1,10 +1,10 @@
 package data.datasource
 
-import data.dto.AttendanceRaw
-import data.dto.MenteeRaw
-import data.dto.PerformanceRaw
-import data.dto.ProjectRaw
-import data.dto.TeamRaw
+import data.models.AttendanceRaw
+import data.models.MenteeRaw
+import data.models.PerformanceRaw
+import data.models.ProjectRaw
+import data.models.TeamRaw
 
 interface EcosystemDataSource {
     fun getTeamsRaw(): List<TeamRaw>

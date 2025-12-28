@@ -1,7 +1,7 @@
 package domain.strategy.performance
 
-import domain.module.PerformanceSubmission
-import domain.module.SubmissionType
+import domain.models.PerformanceSubmission
+import domain.models.SubmissionType
 
 interface MenteePerformanceAnalyzer {
     fun menteeAnalyze(

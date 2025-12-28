@@ -1,6 +1,6 @@
 package domain.repository
 
-import domain.module.Attendance
+import domain.models.Attendance
 
 interface AttendanceRepository {
     fun getAll(): List<Attendance>

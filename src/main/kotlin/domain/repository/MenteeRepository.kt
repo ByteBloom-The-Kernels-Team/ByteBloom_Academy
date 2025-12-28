@@ -1,5 +1,5 @@
 package domain.repository
-import domain.module.Mentee
+import domain.models.Mentee
 
 interface MenteeRepository {
     fun getAll(): List<Mentee>

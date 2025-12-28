@@ -1,4 +1,4 @@
-package domain.module
+package domain.models
 
 enum class SubmissionType {
     TASK,

@@ -8,15 +8,16 @@ import domain.strategy.performance.AverageTeamPerformance
 import domain.strategy.attendance.PerfectAttendanceByWeek
 import domain.strategy.attendance.PoorAttendanceByWeek
 import domain.strategy.attendance.TeamAttendanceReportByWeek
-import domain.module.Mentee
-import domain.module.Project
-import domain.module.Team
-import domain.module.SubmissionType
+import domain.models.Mentee
+import domain.models.Project
+import domain.models.Team
+import domain.models.SubmissionType
 import domain.repository.AttendanceRepository
 import domain.repository.MenteeRepository
 import domain.repository.PerformanceRepository
 import domain.repository.ProjectRepository
 import domain.repository.TeamRepository
+import domain.strategy.attendance.MenteeAttendance
 
 class EcosystemService(
     private val teamRepository: TeamRepository,

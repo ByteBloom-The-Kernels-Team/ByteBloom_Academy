@@ -1,7 +1,7 @@
 package domain.repository
 
-import domain.module.PerformanceSubmission
-import domain.module.SubmissionType
+import domain.models.PerformanceSubmission
+import domain.models.SubmissionType
 
 interface PerformanceRepository {
     fun getAll(): List<PerformanceSubmission>
