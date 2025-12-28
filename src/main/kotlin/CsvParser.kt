@@ -1,8 +1,8 @@
-import models.PerformanceRaw
-import models.TeamRaw
-import models.MenteeRaw
-import models.AttendanceRaw
-import models.ProjectRaw
+import data.dto.PerformanceRaw
+import data.dto.TeamRaw
+import data.dto.MenteeRaw
+import data.dto.AttendanceRaw
+import data.dto.ProjectRaw
 import java.io.File
 
 private val teamFileLines = File("src/main/resources/teams.csv").readLines()

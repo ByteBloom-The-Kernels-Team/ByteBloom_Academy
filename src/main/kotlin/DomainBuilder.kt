@@ -1,10 +1,10 @@
-import models.TeamRaw
-import models.MenteeRaw
-import models.PerformanceRaw
-import domain.Team
-import domain.Mentee
-import domain.PerformanceSubmission
-import domain.SubmissionType
+import data.dto.TeamRaw
+import data.dto.MenteeRaw
+import data.dto.PerformanceRaw
+import domain.module.Team
+import domain.module.Mentee
+import domain.module.PerformanceSubmission
+import domain.module.SubmissionType
 
 class DomainBuilder(
     private val rawTeams: List<TeamRaw>,
