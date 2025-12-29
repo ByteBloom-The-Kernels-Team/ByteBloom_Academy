@@ -38,9 +38,9 @@ class EcosystemService(
 
     fun findProjectAssignedToTeam(teamId: String): Project? {
         val projects = projectRepository.getAll()
-        val ProjectByTeamId = ProjectByTeamId()
+        val projectByTeamId = ProjectByTeamId()
 
-        return ProjectByTeamId.findProjectForTeam(teamId, projects)
+        return projectByTeamId.findProjectForTeam(teamId, projects)
     }
 
     fun findLeadMentorForMentee(menteeId: String): String? {
