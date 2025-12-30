@@ -11,7 +11,7 @@ private val teamFileLines = File("src/main/resources/teams.csv").readLines()
 private val menteeFileLines = File("src/main/resources/mentees.csv").readLines()
 private val performanceFileLines = File("src/main/resources/performance.csv").readLines()
 private val attendanceFileLines = File("src/main/resources/attendance.csv").readLines()
-private val projectFileLines = File("src/main/resources/project.csv").readLines()
+private val projectFileLines = File("src/main/resources/projects.csv").readLines()
 
 fun validateAndSplit(line: String, expectedSize: Int): List<String>? {
     val parts = line.split(",").map { it.trim() }
