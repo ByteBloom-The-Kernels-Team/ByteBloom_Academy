@@ -17,7 +17,7 @@ import domain.repository.MenteeRepository
 import domain.repository.PerformanceRepository
 import domain.repository.ProjectRepository
 import domain.repository.TeamRepository
-import domain.strategy.attendance.MenteeAttendance
+import domain.models.MenteeAttendance
 
 class EcosystemService(
     private val teamRepository: TeamRepository,
