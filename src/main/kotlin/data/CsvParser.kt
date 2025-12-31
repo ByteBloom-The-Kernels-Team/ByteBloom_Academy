@@ -50,6 +50,7 @@ fun parsePerformanceData(): List<PerformanceRaw> {
         .drop(1)
         .mapNotNull { line -> parsePerformanceCsvLine(line) }
 }
+
 fun parseAttendanceCsvLine(line: String): AttendanceRaw? {
     val attendanceParts = validateAndSplit(line, 4) ?: return null
     return AttendanceRaw(
@@ -59,11 +60,13 @@ fun parseAttendanceCsvLine(line: String): AttendanceRaw? {
         attendanceParts[3]
     )
 }
+
 fun parseAttendanceData(): List<AttendanceRaw> {
     return attendanceFileLines
         .drop(1)
         .mapNotNull { line -> parseAttendanceCsvLine(line) }
 }
+
 fun parseProjectCsvLine(line: String): ProjectRaw? {
     val projectParts = validateAndSplit(line, 3) ?: return null
     return ProjectRaw(
@@ -72,6 +75,7 @@ fun parseProjectCsvLine(line: String): ProjectRaw? {
         projectParts[2]
     )
 }
+
 fun parseProjectData(): List<ProjectRaw> {
     return projectFileLines
         .drop(1)

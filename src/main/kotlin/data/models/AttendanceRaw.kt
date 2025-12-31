@@ -1,4 +1,5 @@
 package data.models
+
 data class AttendanceRaw(
     val menteeId: String,
     val week1Status: String,

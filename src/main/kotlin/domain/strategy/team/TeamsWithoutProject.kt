@@ -3,7 +3,7 @@ package domain.strategy.team
 import domain.models.Project
 import domain.models.Team
 
-class TeamsWithoutProject: TeamSelectionStrategy {
+class TeamsWithoutProject : TeamSelectionStrategy {
     override fun selectTeams(
         teams: List<Team>,
         projects: List<Project>

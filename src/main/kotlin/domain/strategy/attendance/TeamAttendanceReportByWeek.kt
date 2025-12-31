@@ -6,7 +6,7 @@ import domain.models.Mentee
 import domain.models.MenteeAttendance
 import domain.models.Team
 
-class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
+class TeamAttendanceReportByWeek : TeamAttendanceReportStrategy {
 
     override fun generateReport(
         teams: List<Team>,
@@ -14,7 +14,7 @@ class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
         attendances: List<Attendance>
     ): Map<String, List<MenteeAttendance>> {
 
-        val attendanceByMenteeId  = attendances.associateBy { it.menteeId }
+        val attendanceByMenteeId = attendances.associateBy { it.menteeId }
 
         return teams.associate { team ->
             val teamMentees = mentees.filter { it.team == team.id }
@@ -33,9 +33,9 @@ class TeamAttendanceReportByWeek: TeamAttendanceReportStrategy {
         return MenteeAttendance(
             menteeName = mentee.name,
             weekStatuses = listOf(
-                attendence?.week1Status?: AttendanceStatus.ABSENT,
-                attendence?.week2Status?: AttendanceStatus.ABSENT,
-                attendence?.week3Status?: AttendanceStatus.ABSENT
+                attendence?.week1Status ?: AttendanceStatus.ABSENT,
+                attendence?.week2Status ?: AttendanceStatus.ABSENT,
+                attendence?.week3Status ?: AttendanceStatus.ABSENT
             )
         )
     }

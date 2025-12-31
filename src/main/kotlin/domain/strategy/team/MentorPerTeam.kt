@@ -3,7 +3,7 @@ package domain.strategy.team
 import domain.models.Mentee
 import domain.models.Team
 
-class MentorPerTeam: MentorSearchStrategy {
+class MentorPerTeam : MentorSearchStrategy {
     override fun findMentorForMentee(
         menteeId: String,
         mentees: List<Mentee>,
@@ -17,5 +17,6 @@ class MentorPerTeam: MentorSearchStrategy {
         val team = teams.firstOrNull { it.id == teamId }
             ?: return null
 
-        return team.mentor    }
+        return team.mentor
+    }
 }

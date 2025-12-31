@@ -3,7 +3,7 @@ package domain.strategy.performance
 import domain.models.PerformanceSubmission
 import domain.models.SubmissionType
 
-class AnalyzePerformanceByType: MenteePerformanceAnalyzer {
+class AnalyzePerformanceByType : MenteePerformanceAnalyzer {
     override fun menteeAnalyze(
         menteeId: String,
         performances: List<PerformanceSubmission>

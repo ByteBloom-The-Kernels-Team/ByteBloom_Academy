@@ -1,4 +1,5 @@
 package data.models
+
 data class PerformanceRaw(
     val id: String,
     val type: String,

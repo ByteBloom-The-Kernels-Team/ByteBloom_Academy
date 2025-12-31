@@ -1,4 +1,5 @@
 package domain.repository
+
 import domain.models.Mentee
 
 interface MenteeRepository {
