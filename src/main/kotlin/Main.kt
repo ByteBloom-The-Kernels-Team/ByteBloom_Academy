@@ -60,7 +60,6 @@ fun main() {
     val perfect = ecosystemService.getMenteesWithPerfectAttendance()
     println("• ${if (perfect.isEmpty()) "None" else perfect.joinToString { it.name }}")
     println("-------------------------------------------------------")
-
     // 5) Poor Attendance
     println("5) Mentees With Poor Attendance:")
     val poor = ecosystemService.getMenteesWithPoorAttendance()
