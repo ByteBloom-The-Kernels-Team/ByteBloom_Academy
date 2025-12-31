@@ -1,48 +1,69 @@
 import data.parseMenteeData
 import data.parsePerformanceData
 import data.parseTeamData
+import data.datasource.CsvEcosystemDataSource
+import data.repository.AttendanceRepositoryImplementation
+import data.repository.MenteeRepositoryImplementation
+import data.repository.PerformanceRepositoryImplementation
+import data.repository.ProjectRepositoryImplementation
+import data.repository.TeamRepositoryImplementation
+import domain.strategy.team.TeamsWithoutProject
+import service.EcosystemService
 
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
-    println("✅ Project setup is correct and runnable.")
-    println("******************************************************")
+    println("**************")
 
-    println("\n--->>> ByteBloom Ecosystem - Data Parsing Demo <<<---\n")
-    println("\n--->>> Weaving The Domain Graph <<<---\n")
+    val dataSource = CsvEcosystemDataSource()
 
-    val teamRawDataRead  = parseTeamData()
-    val menteeRawDataRead  = parseMenteeData()
-    val performanceRawDataRead  = parsePerformanceData()
+    val menteeRepository = MenteeRepositoryImplementation(dataSource)
+    val performanceRepository = PerformanceRepositoryImplementation(dataSource)
+    val teamRepository = TeamRepositoryImplementation(dataSource)
+    val projectRepository = ProjectRepositoryImplementation(dataSource)
+    val attendanceRepository = AttendanceRepositoryImplementation(dataSource)
 
-    val domainBuilderService = DomainBuilder(
-        teamRawDataRead,
-        menteeRawDataRead,
-        performanceRawDataRead)
+    val ecosystemService = EcosystemService(
+        teamRepository,
+        menteeRepository,
+        projectRepository,
+        attendanceRepository,
+        performanceRepository
+    )
 
-    val domainTeamsBuilt = domainBuilderService.buildDomain()
+    val menteeId = "m002"
+    val teamId = "t001"
 
-    val teamSelectedForPrinting = domainTeamsBuilt.firstOrNull()
-    // Another way to select a team by ID
-    // val teamSelectedForPrinting = domainTeamsBuilt.find { it.id == "bravo" }
+    println("\nTesting 5 Features:")
+    println("-------------------------------------------------------")
 
-    if (teamSelectedForPrinting == null) {
-        println("--->>> No teams were found in the data!")
-        return
-    }
+    // 1) Teams Without Projects
+    println("1) Teams Without Projects:")
+    val strategy = TeamsWithoutProject()
+    val teamsWithoutProjects = ecosystemService.findTeamsWithoutProjects(strategy)
+    println("• ${teamsWithoutProjects.joinToString { it.name }}")
+    println("-------------------------------------------------------")
 
-    println("=================================================")
-    println("\n--->>> Selected Team Details <<<---")
-    println("--->>> Team Name: ${teamSelectedForPrinting.name}")
-    println("--->>> Mentor: ${teamSelectedForPrinting.mentor}")
-    println("\n=================================================")
-    println("\n--->>> Mentees linked to this team <<<---")
-    if (teamSelectedForPrinting.mentees.isEmpty()) {
-        println("--->>> No mentees are linked to this team!")
-    } else {
-        teamSelectedForPrinting.mentees.forEach { mentee ->
-            println("   - Mentee: ${mentee.name} (ID: ${mentee.id})")
-        }
-    }
-    println("\n=================================================")
+    // 2) Project Assigned to Team
+    println("2) Project Assigned to Team ($teamId):")
+    val project = ecosystemService.findProjectAssignedToTeam(teamId)
+    println("• ${project?.title ?: "No Project Assigned"}")
+    println("-------------------------------------------------------")
+
+    // 3) Lead Mentor for Mentee
+    println("3) Lead Mentor for Mentee ($menteeId):")
+    val mentor = ecosystemService.findLeadMentorForMentee(menteeId)
+    println("• ${mentor ?: "Not Assigned"}")
+    println("-------------------------------------------------------")
+
+    // 4) Perfect Attendance
+    println("4) Mentees With Perfect Attendance:")
+    val perfect = ecosystemService.getMenteesWithPerfectAttendance()
+    println("• ${if (perfect.isEmpty()) "None" else perfect.joinToString { it.name }}")
+    println("-------------------------------------------------------")
+    // 5) Poor Attendance
+    println("5) Mentees With Poor Attendance:")
+    val poor = ecosystemService.getMenteesWithPoorAttendance()
+    println("• ${if (poor.isEmpty()) "None" else poor.joinToString { it.name }}")
+    println("-------------------------------------------------------")
 }
 
