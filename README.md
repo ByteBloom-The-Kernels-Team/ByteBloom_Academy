@@ -57,6 +57,13 @@ reporting features.
 
 -   ---
 
+## Week 4 Additions
+
+This week introduced a full structural refactor based on the task requirements.  
+We reorganized the project architecture to clearly separate stable components (domain models, enums, and interfaces) from changeable components (data sources, raw models, and repository implementations).  
+Additionally, the Strategy module was restructured into focused sub‑packages to improve clarity and maintainability.  
+These updates enhanced the overall organization of the codebase and aligned the project with a cleaner, more scalable architectural design.
+
 ### The Kernels Team
 
-💙💙 **Keep Creating**💙💙
+💙💙💙 **Keep Creating**💙💙💙
