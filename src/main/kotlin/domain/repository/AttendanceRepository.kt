@@ -1,8 +1,8 @@
 package domain.repository
 
-import domain.models.Attendance
+import domain.model.Attendance
 
 interface AttendanceRepository {
-    fun getAll(): List<Attendance>
-    fun getByMenteeId(menteeId: String): Attendance?
+    fun getAllAttendances(): List<Attendance>
+    fun getAttendanceByMenteeId(menteeId: String): Attendance?
 }

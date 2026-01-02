@@ -1,4 +1,4 @@
-package domain.models
+package domain.model
 
 data class Mentee(
     val id: String,

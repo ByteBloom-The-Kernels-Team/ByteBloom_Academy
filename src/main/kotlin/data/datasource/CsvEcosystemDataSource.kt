@@ -7,9 +7,9 @@ import data.parseProjectData
 import data.parseTeamData
 
 class CsvEcosystemDataSource : EcosystemDataSource {
-    override fun getTeamsRaw() = parseTeamData()
-    override fun getMenteesRaw() = parseMenteeData()
-    override fun getAttendanceRaw() = parseAttendanceData()
-    override fun getPerformanceRaw() = parsePerformanceData()
-    override fun getProjectsRaw() = parseProjectData()
+    override fun getTeams() = parseTeamData()
+    override fun getMentees() = parseMenteeData()
+    override fun getAttendance() = parseAttendanceData()
+    override fun getPerformance() = parsePerformanceData()
+    override fun getProjects() = parseProjectData()
 }

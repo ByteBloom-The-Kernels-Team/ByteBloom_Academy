@@ -1,7 +1,7 @@
 package domain.strategy.performance
 
-import domain.models.Mentee
-import domain.models.PerformanceSubmission
+import domain.model.Mentee
+import domain.model.PerformanceSubmission
 
 class HighestAverageScoreMenteeStrategy : TopScoringMenteeStrategy {
     override fun findTopMentee(

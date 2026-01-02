@@ -1,9 +1,9 @@
 package domain.repository
 
-import domain.models.Project
+import domain.model.Project
 
 interface ProjectRepository {
-    fun getAll(): List<Project>
-    fun getById(projectId: String): Project?
-    fun getByTeamId(teamId: String): Project?
+    fun getAllProjects(): List<Project>
+    fun getProjectById(projectId: String): Project?
+    fun getProjectByTeamId(teamId: String): Project?
 }

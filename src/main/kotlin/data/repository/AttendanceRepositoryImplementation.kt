@@ -1,30 +1,34 @@
 package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.models.Attendance
-import domain.models.AttendanceStatus
+import domain.model.Attendance
+import domain.model.AttendanceStatus
 import domain.repository.AttendanceRepository
+import data.model.AttendanceRaw
 
 class AttendanceRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : AttendanceRepository {
 
-    override fun getAll(): List<Attendance> {
-        return dataSource.getAttendanceRaw().map { raw ->
-            Attendance(
-                menteeId = raw.menteeId,
-                week1Status = mapStatus(raw.week1Status),
-                week2Status = mapStatus(raw.week2Status),
-                week3Status = mapStatus(raw.week3Status)
-            )
-        }
+    override fun getAllAttendances(): List<Attendance> {
+        return dataSource.getAttendance().map {it.toDomainModel()}
     }
 
-    override fun getByMenteeId(menteeId: String): Attendance? {
-        return getAll().find { it.menteeId == menteeId }
+    override fun getAttendanceByMenteeId(menteeId: String): Attendance? {
+        return getAllAttendances().find { it.menteeId == menteeId }
     }
-
-    private fun mapStatus(raw: String): AttendanceStatus {
-        return AttendanceStatus.valueOf(raw.uppercase())
-    }
+}
+private fun AttendanceRaw.toDomainModel(): Attendance {
+    val weeklyStatusesList = listOf(
+        this.week1Status,
+        this.week2Status,
+        this.week3Status
+    ).map { it.toAttendanceStatus() }
+    return Attendance(
+        menteeId = menteeId,
+        weeklyStatus = weeklyStatusesList
+    )
+}
+private fun String.toAttendanceStatus(): AttendanceStatus {
+    return AttendanceStatus.valueOf(uppercase())
 }
