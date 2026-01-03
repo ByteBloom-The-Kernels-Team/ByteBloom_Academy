@@ -11,22 +11,21 @@ class AttendanceRepositoryImplementation(
 ) : AttendanceRepository {
 
     override fun getAllAttendances(): List<Attendance> {
-        return dataSource.getAttendance().map {it.toDomainModel()}
+        return dataSource.getAttendance()
+            .map {it.toDomainModel()}
     }
 
     override fun getAttendanceByMenteeId(menteeId: String): Attendance? {
-        return getAllAttendances().find { it.menteeId == menteeId }
+        return dataSource.getAttendance()
+            .find { it.menteeId == menteeId }
+            ?.toDomainModel()
     }
 }
 private fun AttendanceRaw.toDomainModel(): Attendance {
-    val weeklyStatusesList = listOf(
-        this.week1Status,
-        this.week2Status,
-        this.week3Status
-    ).map { it.toAttendanceStatus() }
     return Attendance(
         menteeId = menteeId,
-        weeklyStatus = weeklyStatusesList
+        weeklyStatus = weeklyStatus
+            .map{it.toAttendanceStatus()}
     )
 }
 private fun String.toAttendanceStatus(): AttendanceStatus {

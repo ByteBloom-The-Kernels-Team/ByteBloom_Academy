@@ -6,5 +6,4 @@ interface TeamRepository {
     fun getAllTeams(): List<Team>
     fun getTeamById(id: String): Team?
     fun getTeamByMentor(mentorName: String): List<Team>
-    fun getTeamByMenteeId(menteeId: String): List<Team>
 }

@@ -10,15 +10,20 @@ class ProjectRepositoryImplementation(
 ) : ProjectRepository {
 
     override fun getAllProjects(): List<Project> {
-        return dataSource.getProjects().map {it.toDomainModel()}
+        return dataSource.getProjects()
+            .map {it.toDomainModel()}
     }
 
     override fun getProjectById(projectId: String): Project? {
-        return getAllProjects().find { it.id == projectId }
+        return dataSource.getProjects()
+            .find { it.id == projectId }
+            ?.toDomainModel()
     }
 
     override fun getProjectByTeamId(teamId: String): Project? {
-        return getAllProjects().find { it.id == teamId }
+        return dataSource.getProjects()
+            .find { it.teamId == teamId }
+            ?.toDomainModel()
     }
 }
 private fun ProjectRaw.toDomainModel(): Project {

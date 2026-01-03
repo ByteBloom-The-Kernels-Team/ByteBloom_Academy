@@ -10,18 +10,25 @@ class PerformanceRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : PerformanceSubmissionRepository {
     override fun getAllPerformanceSubmissions(): List<PerformanceSubmission> {
-        return dataSource.getPerformance().map {it.toDomainModel()}
+        return dataSource.getPerformance()
+            .map {it.toDomainModel()}
     }
 
     override fun getPerformanceSubmissionByMenteeId(menteeId: String): List<PerformanceSubmission> {
-        return getAllPerformanceSubmissions().filter { it.id == menteeId }
+        return dataSource.getPerformance()
+            .filter { it.menteeId == menteeId }
+            .map {it.toDomainModel()}
     }
 
     override fun getPerformanceSubmissionByType(type: SubmissionType): List<PerformanceSubmission> {
-        return getAllPerformanceSubmissions().filter { it.type == type }
+        return dataSource.getPerformance()
+            .filter { it.type.toSubmissionType()== type}
+            .map {it.toDomainModel()}
     }
     override fun getPerformanceSubmissionById(id: String): PerformanceSubmission? {
-        return getAllPerformanceSubmissions().find { it.id == id }
+        return dataSource.getPerformance()
+            .find { it.id == id }
+            ?.toDomainModel()
     }
 }
 private fun String.toSubmissionType(): SubmissionType {

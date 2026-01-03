@@ -10,18 +10,19 @@ class TeamRepositoryImplementation(
 ) : TeamRepository {
 
     override fun getAllTeams(): List<Team> {
-        return dataSource.getTeams().map{it.toDomainModel()}
+        return dataSource.getTeams()
+            .map{it.toDomainModel()}
     }
-
     override fun getTeamById(id: String): Team? {
-        return getAllTeams().find { it.id == id }
+        return dataSource.getTeams()
+            .firstOrNull{ it.id == id }
+            ?.toDomainModel()
     }
 
     override fun getTeamByMentor(mentorName: String): List<Team> {
-        return getAllTeams().filter { it.mentor.contains(mentorName, ignoreCase = true) }
-    }
-    override fun getTeamByMenteeId(menteeId: String): List<Team> {
-        return getAllTeams().filter { it.menteeIds.contains(menteeId) }
+        return dataSource.getTeams()
+            .filter { it.mentor.contains(mentorName, ignoreCase = true) }
+            .map { it.toDomainModel() }
     }
 }
 private fun TeamRaw.toDomainModel(): Team {
