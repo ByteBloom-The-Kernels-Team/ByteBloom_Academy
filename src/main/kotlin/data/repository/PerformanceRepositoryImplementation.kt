@@ -4,7 +4,8 @@ import data.datasource.EcosystemDataSource
 import domain.model.PerformanceSubmission
 import domain.model.SubmissionType
 import domain.repository.PerformanceSubmissionRepository
-import data.model.PerformanceRaw
+import data.mapper.toDomainModel
+import data.mapper.toSubmissionType
 
 class PerformanceRepositoryImplementation(
     private val dataSource: EcosystemDataSource
@@ -30,15 +31,4 @@ class PerformanceRepositoryImplementation(
             .find { it.id == id }
             ?.toDomainModel()
     }
-}
-private fun String.toSubmissionType(): SubmissionType {
-    return SubmissionType.valueOf(uppercase())
-}
-private fun PerformanceRaw.toDomainModel(): PerformanceSubmission {
-    return PerformanceSubmission(
-        id = id,
-        menteeIds = listOf(menteeId),
-        type = type.toSubmissionType(),
-        score = score
-    )
 }

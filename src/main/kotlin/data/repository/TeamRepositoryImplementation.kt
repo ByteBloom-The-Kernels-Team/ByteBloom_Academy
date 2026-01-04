@@ -3,7 +3,7 @@ package data.repository
 import data.datasource.EcosystemDataSource
 import domain.model.Team
 import domain.repository.TeamRepository
-import data.model.TeamRaw
+import data.mapper.toDomainModel
 
 class TeamRepositoryImplementation(
     private val dataSource: EcosystemDataSource
@@ -24,12 +24,4 @@ class TeamRepositoryImplementation(
             .filter { it.mentor.contains(mentorName, ignoreCase = true) }
             .map { it.toDomainModel() }
     }
-}
-private fun TeamRaw.toDomainModel(): Team {
-    return Team(
-        id = id,
-        name = name,
-        mentor = mentor,
-        menteeIds = emptyList()
-    )
 }

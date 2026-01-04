@@ -3,7 +3,7 @@ package data.repository
 import data.datasource.EcosystemDataSource
 import domain.model.Project
 import domain.repository.ProjectRepository
-import data.model.ProjectRaw
+import data.mapper.toDomainModel
 
 class ProjectRepositoryImplementation(
     private val dataSource: EcosystemDataSource
@@ -25,11 +25,4 @@ class ProjectRepositoryImplementation(
             .find { it.teamId == teamId }
             ?.toDomainModel()
     }
-}
-private fun ProjectRaw.toDomainModel(): Project {
-    return Project(
-        id = id,
-        title = title,
-        teamId = teamId
-    )
 }

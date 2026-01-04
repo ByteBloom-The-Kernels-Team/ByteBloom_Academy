@@ -3,7 +3,7 @@ package data.repository
 import data.datasource.EcosystemDataSource
 import domain.model.Mentee
 import domain.repository.MenteeRepository
-import data.model.MenteeRaw
+import data.mapper.toDomainModel
 
 class MenteeRepositoryImplementation(
     private val dataSource: EcosystemDataSource
@@ -20,7 +20,7 @@ class MenteeRepositoryImplementation(
             ?.toDomainModel()
     }
 
-    override fun getMenteeByTeamId(teamId: String): List<Mentee> {
+    override fun getMenteesByTeamId(teamId: String): List<Mentee> {
         return dataSource.getMentees()
             .filter { it.teamId == teamId }
             .map { it.toDomainModel() }
@@ -31,12 +31,4 @@ class MenteeRepositoryImplementation(
             .filter { it.name.contains(name, ignoreCase = true) }
             .map { it.toDomainModel() }
     }
-}
-private fun MenteeRaw.toDomainModel(): Mentee {
-    return Mentee(
-        id = id,
-        name = name,
-        team = teamId,
-        submissions = emptyList()
-    )
 }
