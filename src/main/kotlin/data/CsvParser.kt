@@ -52,12 +52,16 @@ fun parsePerformanceData(): List<PerformanceRaw> {
 }
 
 fun parseAttendanceCsvLine(line: String): AttendanceRaw? {
-    val attendanceParts = validateAndSplit(line, 4) ?: return null
+    val parts = validateAndSplit(line, 2) ?: return null
+    val menteeId = parts[0]
+    val weeklyStatus = if (parts.size > 1) {
+        parts.subList(1, parts.size)
+    } else {
+        emptyList()
+    }
     return AttendanceRaw(
-        attendanceParts[0],
-        attendanceParts[1],
-        attendanceParts[2],
-        attendanceParts[3]
+        menteeId = menteeId,
+        weeklyStatus = weeklyStatus
     )
 }
 
