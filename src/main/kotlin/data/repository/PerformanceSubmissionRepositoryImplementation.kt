@@ -7,7 +7,7 @@ import domain.repository.PerformanceSubmissionRepository
 import data.mapper.toDomainModel
 import data.mapper.toSubmissionType
 
-class PerformanceRepositoryImplementation(
+class PerformanceSubmissionRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : PerformanceSubmissionRepository {
     override fun getAllPerformanceSubmissions(): List<PerformanceSubmission> {

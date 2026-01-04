@@ -9,6 +9,7 @@ fun AttendanceRaw.toDomainModel(): Attendance {
         menteeId = menteeId,
         weeklyStatus = weeklyStatus
             .map{it.toAttendanceStatus()}
+            .toMutableList()
     )
 }
 fun String.toAttendanceStatus(): AttendanceStatus {
