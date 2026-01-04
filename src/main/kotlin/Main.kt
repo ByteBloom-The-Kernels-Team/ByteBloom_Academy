@@ -1,7 +1,7 @@
 import data.datasource.CsvEcosystemDataSource
 import data.repository.AttendanceRepositoryImplementation
 import data.repository.MenteeRepositoryImplementation
-import data.repository.PerformanceRepositoryImplementation
+import data.repository.PerformanceSubmissionRepositoryImplementation
 import data.repository.ProjectRepositoryImplementation
 import data.repository.TeamRepositoryImplementation
 import domain.strategy.team.TeamsWithoutProject
@@ -14,7 +14,7 @@ fun main() {
     val dataSource = CsvEcosystemDataSource()
 
     val menteeRepository = MenteeRepositoryImplementation(dataSource)
-    val performanceRepository = PerformanceRepositoryImplementation(dataSource)
+    val performanceSubmissionRepository = PerformanceSubmissionRepositoryImplementation(dataSource)
     val teamRepository = TeamRepositoryImplementation(dataSource)
     val projectRepository = ProjectRepositoryImplementation(dataSource)
     val attendanceRepository = AttendanceRepositoryImplementation(dataSource)
@@ -24,7 +24,7 @@ fun main() {
         menteeRepository,
         projectRepository,
         attendanceRepository,
-        performanceRepository
+        performanceSubmissionRepository
     )
 
     val menteeId = "m002"
