@@ -1,7 +1,7 @@
 package domain.strategy.team
 
-import domain.models.Project
-import domain.models.Team
+import domain.model.Project
+import domain.model.Team
 
 class TeamsWithoutProject : TeamSelectionStrategy {
     override fun selectTeams(

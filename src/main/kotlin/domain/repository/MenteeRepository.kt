@@ -1,11 +1,11 @@
 package domain.repository
 
-import domain.models.Mentee
+import domain.model.Mentee
 
 interface MenteeRepository {
-    fun getAll(): List<Mentee>
-    fun getById(id: String): Mentee?
-    fun getByTeamId(teamId: String): List<Mentee>
-    fun getByName(name: String): List<Mentee>
+    fun getAllMentees(): List<Mentee>
+    fun getMenteeById(id: String): Mentee?
+    fun getMenteesByTeamId(teamId: String): List<Mentee>
+    fun getMenteeByName(name: String): List<Mentee>
 }
 

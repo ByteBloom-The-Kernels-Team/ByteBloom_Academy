@@ -1,7 +1,7 @@
 package domain.strategy.team
 
-import domain.models.Mentee
-import domain.models.Team
+import domain.model.Mentee
+import domain.model.Team
 
 interface MentorSearchStrategy {
     fun findMentorForMentee(

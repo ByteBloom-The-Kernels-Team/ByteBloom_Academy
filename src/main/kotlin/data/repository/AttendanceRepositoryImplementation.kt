@@ -1,30 +1,22 @@
 package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.models.Attendance
-import domain.models.AttendanceStatus
+import domain.model.Attendance
 import domain.repository.AttendanceRepository
+import data.mapper.toDomainModel
 
 class AttendanceRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : AttendanceRepository {
 
-    override fun getAll(): List<Attendance> {
-        return dataSource.getAttendanceRaw().map { raw ->
-            Attendance(
-                menteeId = raw.menteeId,
-                week1Status = mapStatus(raw.week1Status),
-                week2Status = mapStatus(raw.week2Status),
-                week3Status = mapStatus(raw.week3Status)
-            )
-        }
+    override fun getAllAttendances(): List<Attendance> {
+        return dataSource.getAttendance()
+            .map {it.toDomainModel()}
     }
 
-    override fun getByMenteeId(menteeId: String): Attendance? {
-        return getAll().find { it.menteeId == menteeId }
-    }
-
-    private fun mapStatus(raw: String): AttendanceStatus {
-        return AttendanceStatus.valueOf(raw.uppercase())
+    override fun getAttendanceByMenteeId(menteeId: String): Attendance? {
+        return dataSource.getAttendance()
+            .find { it.menteeId == menteeId }
+            ?.toDomainModel()
     }
 }

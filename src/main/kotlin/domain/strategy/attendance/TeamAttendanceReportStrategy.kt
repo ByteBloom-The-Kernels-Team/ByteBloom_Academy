@@ -1,10 +1,8 @@
 package domain.strategy.attendance
 
-import domain.models.Attendance
-import domain.models.AttendanceStatus
-import domain.models.Mentee
-import domain.models.MenteeAttendance
-import domain.models.Team
+import domain.model.Attendance
+import domain.model.Mentee
+import domain.model.Team
 
 interface TeamAttendanceReportStrategy {
     fun generateReport(

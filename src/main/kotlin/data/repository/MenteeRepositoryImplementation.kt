@@ -1,33 +1,34 @@
 package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.models.Mentee
+import domain.model.Mentee
 import domain.repository.MenteeRepository
+import data.mapper.toDomainModel
 
 class MenteeRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : MenteeRepository {
 
-    override fun getAll(): List<Mentee> {
-        return dataSource.getMenteesRaw().map { raw ->
-            Mentee(
-                id = raw.id,
-                name = raw.name,
-                team = raw.teamId,
-                submissions = emptyList()
-            )
-        }
+    override fun getAllMentees(): List<Mentee> {
+        return dataSource.getMentees()
+            .map {it.toDomainModel()}
     }
 
-    override fun getById(id: String): Mentee? {
-        return getAll().find { it.id == id }
+    override fun getMenteeById(id: String): Mentee? {
+        return dataSource.getMentees()
+            .find{ it.id == id }
+            ?.toDomainModel()
     }
 
-    override fun getByTeamId(teamId: String): List<Mentee> {
-        return getAll().filter { it.team == teamId }
+    override fun getMenteesByTeamId(teamId: String): List<Mentee> {
+        return dataSource.getMentees()
+            .filter { it.teamId == teamId }
+            .map { it.toDomainModel() }
     }
 
-    override fun getByName(name: String): List<Mentee> {
-        return getAll().filter { it.name.contains(name, ignoreCase = true) }
+    override fun getMenteeByName(name: String): List<Mentee> {
+        return dataSource.getMentees()
+            .filter { it.name.contains(name, ignoreCase = true) }
+            .map { it.toDomainModel() }
     }
 }

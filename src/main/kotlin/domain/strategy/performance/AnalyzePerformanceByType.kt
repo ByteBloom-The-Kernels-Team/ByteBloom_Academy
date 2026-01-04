@@ -1,7 +1,7 @@
 package domain.strategy.performance
 
-import domain.models.PerformanceSubmission
-import domain.models.SubmissionType
+import domain.model.PerformanceSubmission
+import domain.model.SubmissionType
 
 class AnalyzePerformanceByType : MenteePerformanceAnalyzer {
     override fun menteeAnalyze(

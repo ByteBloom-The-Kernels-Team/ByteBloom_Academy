@@ -1,4 +1,4 @@
-package domain.models
+package domain.model
 
 enum class AttendanceStatus {
     PRESENT,

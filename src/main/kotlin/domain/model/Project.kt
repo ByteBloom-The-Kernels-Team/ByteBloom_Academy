@@ -1,4 +1,4 @@
-package domain.models
+package domain.model
 
 data class Project(
     val id: String,

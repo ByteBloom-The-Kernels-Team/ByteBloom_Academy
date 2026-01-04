@@ -1,28 +1,28 @@
 package data.repository
 
 import data.datasource.EcosystemDataSource
-import domain.models.Project
+import domain.model.Project
 import domain.repository.ProjectRepository
+import data.mapper.toDomainModel
 
 class ProjectRepositoryImplementation(
     private val dataSource: EcosystemDataSource
 ) : ProjectRepository {
 
-    override fun getAll(): List<Project> {
-        return dataSource.getProjectsRaw().map { raw ->
-            Project(
-                id = raw.id,
-                title = raw.title,
-                teamId = raw.teamId
-            )
-        }
+    override fun getAllProjects(): List<Project> {
+        return dataSource.getProjects()
+            .map {it.toDomainModel()}
     }
 
-    override fun getById(projectId: String): Project? {
-        return getAll().find { it.id == projectId }
+    override fun getProjectById(projectId: String): Project? {
+        return dataSource.getProjects()
+            .find { it.id == projectId }
+            ?.toDomainModel()
     }
 
-    override fun getByTeamId(teamId: String): Project? {
-        return getAll().find { it.id == teamId }
+    override fun getProjectByTeamId(teamId: String): Project? {
+        return dataSource.getProjects()
+            .find { it.teamId == teamId }
+            ?.toDomainModel()
     }
 }

@@ -1,7 +1,7 @@
 package domain.strategy.attendance
 
-import domain.models.Attendance
-import domain.models.AttendanceStatus
+import domain.model.Attendance
+import domain.model.AttendanceStatus
 
 class PoorAttendanceByWeek : AttendanceStrategy {
     override fun getAttendance(attendances: List<Attendance>): List<String> {
