@@ -3,7 +3,7 @@ package domain.strategy.team
 import domain.model.Project
 import domain.model.Team
 
-public interface TeamSelectionStrategy {
+interface TeamSelectionStrategy {
     fun selectTeams(
         teams: List<Team>,
         projects: List<Project>

@@ -22,5 +22,6 @@ class AnalyzePerformanceByType : MenteePerformanceAnalyzer {
         performances: List<PerformanceSubmission>
     ) = performances
         .groupBy { it.type }
-        .mapValues { (_, subs) -> subs.mapNotNull { it.score.toDoubleOrNull() } }
+        .mapValues { (_, subs) -> subs
+            .mapNotNull { it.score.toDoubleOrNull() } }
 }

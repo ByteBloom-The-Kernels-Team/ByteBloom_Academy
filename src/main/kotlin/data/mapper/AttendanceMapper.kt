@@ -13,5 +13,6 @@ fun AttendanceRaw.toDomainModel(): Attendance {
     )
 }
 fun String.toAttendanceStatus(): AttendanceStatus {
-    return AttendanceStatus.valueOf(uppercase())
+    return AttendanceStatus
+        .valueOf(uppercase())
 }
