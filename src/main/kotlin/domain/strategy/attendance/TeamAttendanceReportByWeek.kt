@@ -1,7 +1,6 @@
 package domain.strategy.attendance
 
 import domain.model.Attendance
-import domain.model.AttendanceStatus
 import domain.model.MenteeAttendance
 import domain.model.Mentee
 import domain.model.Team
@@ -44,7 +43,7 @@ class TeamAttendanceReportByWeek : TeamAttendanceReportStrategy {
         val attendance = attendanceMap[mentee.id]
         return MenteeAttendance(
             menteeName = mentee.name,
-            weekStatuses = attendance?.weeklyStatus ?: emptyList<AttendanceStatus>()
+            weekStatuses = attendance?.weeklyStatus ?: emptyList()
         )
     }
 }
