@@ -12,6 +12,7 @@ class PoorAttendanceByWeek : AttendanceStrategy {
     }
 
     private fun hasPoorAttendance(attendance: Attendance): Boolean {
-        return attendance.weeklyStatus.any { it != AttendanceStatus.PRESENT }
+        return attendance.weeklyStatus
+            .any { it != AttendanceStatus.PRESENT }
     }
 }

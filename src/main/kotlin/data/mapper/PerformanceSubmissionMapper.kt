@@ -5,7 +5,8 @@ import domain.model.PerformanceSubmission
 import domain.model.SubmissionType
 
 fun String.toSubmissionType(): SubmissionType {
-    return SubmissionType.valueOf(uppercase())
+    return SubmissionType
+        .valueOf(uppercase())
 }
 fun PerformanceRaw.toDomainModel(): PerformanceSubmission {
     return PerformanceSubmission(

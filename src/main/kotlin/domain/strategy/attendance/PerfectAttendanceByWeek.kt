@@ -12,6 +12,7 @@ class PerfectAttendanceByWeek : AttendanceStrategy {
     }
 
     private fun hasPerfectAttendance(attendance: Attendance): Boolean {
-        return attendance.weeklyStatus.all { it == AttendanceStatus.PRESENT }
+        return attendance.weeklyStatus
+            .all { it == AttendanceStatus.PRESENT }
     }
 }
