@@ -4,15 +4,23 @@ import domain.model.Project
 import domain.model.Team
 
 class TeamsWithoutProject : TeamSelectionStrategy {
+
     override fun selectTeams(
         teams: List<Team>,
         projects: List<Project>
     ): List<Team> {
-        val teamIdsWithAssignedProjects =
-            projects.map { it.teamId }.toSet()
+        val assignedTeamIds = extractAssignedTeamIds(projects)
+        return filterTeamsWithoutProjects(teams, assignedTeamIds)
+    }
 
-        return teams.filter { team ->
-            team.id !in teamIdsWithAssignedProjects
-        }
+    private fun extractAssignedTeamIds(projects: List<Project>): Set<String> {
+        return projects.map { it.teamId }.toSet()
+    }
+
+    private fun filterTeamsWithoutProjects(
+        teams: List<Team>,
+        assignedTeamIds: Set<String>
+    ): List<Team> {
+        return teams.filter { it.id !in assignedTeamIds }
     }
 }
