@@ -4,13 +4,14 @@ import domain.model.Attendance
 import domain.model.AttendanceStatus
 
 class PoorAttendanceByWeek : AttendanceStrategy {
+
     override fun getAttendance(attendances: List<Attendance>): List<String> {
         return attendances
-            .filter {
-                it.week1Status != AttendanceStatus.PRESENT ||
-                        it.week2Status != AttendanceStatus.PRESENT ||
-                        it.week3Status != AttendanceStatus.PRESENT
-            }
+            .filter { hasPoorAttendance(it) }
             .map { it.menteeId }
+    }
+
+    private fun hasPoorAttendance(attendance: Attendance): Boolean {
+        return attendance.weeklyStatus.any { it != AttendanceStatus.PRESENT }
     }
 }

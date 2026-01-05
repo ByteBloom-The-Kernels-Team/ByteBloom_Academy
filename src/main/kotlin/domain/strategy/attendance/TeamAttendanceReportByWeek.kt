@@ -2,6 +2,7 @@ package domain.strategy.attendance
 
 import domain.model.Attendance
 import domain.model.AttendanceStatus
+import domain.model.MenteeAttendance
 import domain.model.Mentee
 import domain.model.Team
 
@@ -13,29 +14,37 @@ class TeamAttendanceReportByWeek : TeamAttendanceReportStrategy {
         attendances: List<Attendance>
     ): Map<String, List<MenteeAttendance>> {
 
-        val attendanceByMenteeId = attendances.associateBy { it.menteeId }
+        val attendanceMap = mapAttendances(attendances)
 
         return teams.associate { team ->
-            val teamMentees = mentees.filter { it.team == team.id }
-            val menteeAttendanceList = teamMentees.map { mentee ->
-                buildMenteeAttendance(mentee, attendanceByMenteeId)
-            }
-            team.name to menteeAttendanceList
+            team.name to buildTeamReport(
+                teamMentees = filterTeamMentees(team.id, mentees),
+                attendanceMap = attendanceMap
+            )
         }
+    }
+
+    private fun mapAttendances(attendances: List<Attendance>) =
+        attendances.associateBy { it.menteeId }
+
+    private fun filterTeamMentees(teamId: String, mentees: List<Mentee>) =
+        mentees.filter { it.team == teamId }
+
+    private fun buildTeamReport(
+        teamMentees: List<Mentee>,
+        attendanceMap: Map<String, Attendance>
+    ) = teamMentees.map { mentee ->
+        buildMenteeAttendance(mentee, attendanceMap)
     }
 
     private fun buildMenteeAttendance(
         mentee: Mentee,
-        attendanceByMenteeId: Map<String, Attendance>
+        attendanceMap: Map<String, Attendance>
     ): MenteeAttendance {
-        val attendence = attendanceByMenteeId[mentee.id]
+        val attendance = attendanceMap[mentee.id]
         return MenteeAttendance(
             menteeName = mentee.name,
-            weekStatuses = listOf(
-                attendence?.week1Status ?: AttendanceStatus.ABSENT,
-                attendence?.week2Status ?: AttendanceStatus.ABSENT,
-                attendence?.week3Status ?: AttendanceStatus.ABSENT
-            )
+            weekStatuses = attendance?.weeklyStatus ?: emptyList<AttendanceStatus>()
         )
     }
 }
