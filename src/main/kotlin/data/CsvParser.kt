@@ -53,22 +53,32 @@ fun parsePerformanceData(): List<PerformanceRaw> {
 
 fun parseAttendanceCsvLine(line: String): AttendanceRaw? {
     val parts = validateAndSplit(line, 2) ?: return null
-    val menteeId = parts[0]
-    val weeklyStatus = if (parts.size > 1) {
-        parts.subList(1, parts.size)
-    } else {
-        emptyList()
-    }
+
+    val menteeId = extractMenteeId(parts)
+    val weeklyStatus = extractWeeklyStatus(parts)
+
     return AttendanceRaw(
         menteeId = menteeId,
         weeklyStatus = weeklyStatus
     )
 }
 
+private fun extractMenteeId(parts: List<String>): String {
+    return parts.first()
+}
+
+private fun extractWeeklyStatus(parts: List<String>): List<String> {
+    return if (parts.size > 1) {
+        parts.subList(1, parts.size)
+    } else {
+        emptyList()
+    }
+}
+
 fun parseAttendanceData(): List<AttendanceRaw> {
     return attendanceFileLines
         .drop(1)
-        .mapNotNull { line -> parseAttendanceCsvLine(line) }
+        .mapNotNull { parseAttendanceCsvLine(it) }
 }
 
 fun parseProjectCsvLine(line: String): ProjectRaw? {
