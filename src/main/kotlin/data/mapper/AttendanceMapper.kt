@@ -2,7 +2,6 @@ package data.mapper
 
 import data.model.AttendanceRaw
 import domain.model.Attendance
-import domain.model.AttendanceStatus
 
 fun AttendanceRaw.toDomainModel(): Attendance {
     return Attendance(
@@ -11,8 +10,4 @@ fun AttendanceRaw.toDomainModel(): Attendance {
             .map{it.toAttendanceStatus()}
             .toMutableList()
     )
-}
-fun String.toAttendanceStatus(): AttendanceStatus {
-    return AttendanceStatus
-        .valueOf(uppercase())
 }
