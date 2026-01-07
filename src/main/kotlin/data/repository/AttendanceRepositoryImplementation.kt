@@ -13,10 +13,4 @@ class AttendanceRepositoryImplementation(
         return dataSource.getAttendance()
             .map {it.toDomainModel()}
     }
-
-    override fun getAttendanceByMenteeId(menteeId: String): Attendance? {
-        return dataSource.getAttendance()
-            .find { it.menteeId == menteeId }
-            ?.toDomainModel()
-    }
 }
