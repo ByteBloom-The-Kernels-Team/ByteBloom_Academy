@@ -1,12 +1,10 @@
 package domain.filter
 
 import domain.model.Mentee
+import domain.model.Team
 
-class TeamMenteeFilter {
-    fun filterByTeam(
-        teamId: String,
-        mentees: List<Mentee>
-    ): List<Mentee> {
-        return mentees.filter { it.team == teamId }
-    }
-}
+fun List<Mentee>.filterByTeam(teamId: String): List<Mentee> =
+    this.filter { it.team == teamId }
+
+fun List<Team>.filterById(id: String): Team? =
+    this.firstOrNull { it.id == id }

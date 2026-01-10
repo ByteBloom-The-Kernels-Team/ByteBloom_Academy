@@ -8,4 +8,3 @@ interface MenteeRepository {
     fun getMenteesByTeamId(teamId: String): List<Mentee>
     fun getMenteeByName(name: String): List<Mentee>
 }
-

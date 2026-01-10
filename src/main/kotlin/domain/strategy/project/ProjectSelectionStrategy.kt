@@ -3,8 +3,5 @@ package domain.strategy.project
 import domain.model.Project
 
 interface ProjectSelectionStrategy {
-    fun findProjectForTeam(
-        teamId: String,
-        projects: List<Project>
-    ): Project?
+    fun findProjectForTeam(teamId: String): Project?
 }
