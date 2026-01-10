@@ -1,26 +1,21 @@
 package domain.strategy.team
 
-import domain.model.Project
+import domain.filter.filterWithoutProjects
+import domain.mapper.extractAssignedTeamIds
 import domain.model.Team
+import domain.repository.ProjectRepository
+import domain.repository.TeamRepository
 
-class TeamsWithoutProject : TeamSelectionStrategy {
+class TeamsWithoutProject(
+    private val teamRepository: TeamRepository,
+    private val projectRepository: ProjectRepository
+) : TeamSelectionStrategy {
 
-    override fun selectTeams(
-        teams: List<Team>,
-        projects: List<Project>
-    ): List<Team> {
-        val assignedTeamIds = extractAssignedTeamIds(projects)
-        return filterTeamsWithoutProjects(teams, assignedTeamIds)
-    }
+    override fun selectTeams(): List<Team> {
+        val allTeams = teamRepository.getAllTeams()
+        val allProjects = projectRepository.getAllProjects()
 
-    private fun extractAssignedTeamIds(projects: List<Project>): Set<String> {
-        return projects.map { it.teamId }.toSet()
-    }
-
-    private fun filterTeamsWithoutProjects(
-        teams: List<Team>,
-        assignedTeamIds: Set<String>
-    ): List<Team> {
-        return teams.filter { it.id !in assignedTeamIds }
+        val assignedTeamIds = allProjects.extractAssignedTeamIds()
+        return allTeams.filterWithoutProjects(assignedTeamIds)
     }
 }
