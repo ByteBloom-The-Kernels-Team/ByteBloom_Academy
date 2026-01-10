@@ -5,5 +5,3 @@ data class TeamRaw(
     val name: String,
     val mentor: String
 )
-
-

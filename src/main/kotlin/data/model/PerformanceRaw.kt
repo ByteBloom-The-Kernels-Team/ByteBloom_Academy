@@ -6,5 +6,3 @@ data class PerformanceRaw(
     val score: String,
     val menteeId: String
 )
-
-

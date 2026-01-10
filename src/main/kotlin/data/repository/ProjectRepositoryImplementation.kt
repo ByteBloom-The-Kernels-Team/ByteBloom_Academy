@@ -13,16 +13,4 @@ class ProjectRepositoryImplementation(
         return dataSource.getProjects()
             .map {it.toDomainModel()}
     }
-
-    override fun getProjectById(projectId: String): Project? {
-        return dataSource.getProjects()
-            .find { it.id == projectId }
-            ?.toDomainModel()
-    }
-
-    override fun getProjectByTeamId(teamId: String): Project? {
-        return dataSource.getProjects()
-            .find { it.teamId == teamId }
-            ?.toDomainModel()
-    }
 }
