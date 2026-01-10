@@ -1,33 +1,30 @@
 package domain.strategy.performance
 
+import domain.filter.filterByMentee
+import domain.mapper.toScores
 import domain.model.Mentee
-import domain.model.PerformanceSubmission
+import domain.repository.MenteeRepository
+import domain.repository.PerformanceSubmissionRepository
 
-class HighestAverageScoreMenteeStrategy : TopScoringMenteeStrategy {
+class HighestAverageScoreMenteeStrategy(
+    private val menteeRepository: MenteeRepository,
+    private val performanceRepository: PerformanceSubmissionRepository
+) : TopScoringMenteeStrategy {
 
-    override fun findTopMentee(
-        mentees: List<Mentee>,
-        performances: List<PerformanceSubmission>
-    ): Mentee? {
-        return mentees.maxByOrNull { mentee ->
-            averageScore(mentee.id, performances)
-        }
+    override fun findTopMentee(): Mentee? {
+        val allMentees = menteeRepository.getAllMentees()
+        return allMentees.maxByOrNull { mentee -> averageScore(mentee.id) }
     }
 
-    private fun averageScore(
-        menteeId: String,
-        performances: List<PerformanceSubmission>
-    ): Double {
-        val scores = extractScores(menteeId, performances)
+    private fun averageScore(menteeId: String): Double {
+        val scores = extractScores(menteeId)
         return if (scores.isEmpty()) 0.0 else scores.average()
     }
 
-    private fun extractScores(
-        menteeId: String,
-        performances: List<PerformanceSubmission>
-    ): List<Double> {
-        return performances
-            .filter { it.menteeId == menteeId }
-            .mapNotNull { it.score.toDoubleOrNull() }
+    private fun extractScores(menteeId: String): List<Double> {
+        val allPerformances = performanceRepository.getAllPerformanceSubmissions()
+        return allPerformances
+            .filterByMentee(menteeId)
+            .toScores()
     }
 }

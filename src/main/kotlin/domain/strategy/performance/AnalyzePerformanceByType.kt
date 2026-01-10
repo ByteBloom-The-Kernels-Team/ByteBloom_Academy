@@ -1,27 +1,20 @@
 package domain.strategy.performance
 
+import domain.filter.filterByMentee
+import domain.mapper.mapScoresByType
 import domain.model.PerformanceSubmission
 import domain.model.SubmissionType
+import domain.repository.PerformanceSubmissionRepository
 
-class AnalyzePerformanceByType : MenteePerformanceAnalyzer {
+class AnalyzePerformanceByType(
+    private val performanceRepository: PerformanceSubmissionRepository
+) : MenteePerformanceAnalyzer {
 
     override fun menteeAnalyze(
         menteeId: String,
-        performances: List<PerformanceSubmission>
     ): Map<SubmissionType, List<Double>> {
-        val filtered = filterByMentee(menteeId, performances)
-        return groupScoresByType(filtered)
+        val allPerformances: List<PerformanceSubmission> = performanceRepository.getAllPerformanceSubmissions()
+        val filteredPerformances = allPerformances.filterByMentee(menteeId)
+        return filteredPerformances.mapScoresByType()
     }
-
-    private fun filterByMentee(
-        menteeId: String,
-        performances: List<PerformanceSubmission>
-    ) = performances.filter { it.menteeId == menteeId }
-
-    private fun groupScoresByType(
-        performances: List<PerformanceSubmission>
-    ) = performances
-        .groupBy { it.type }
-        .mapValues { (_, subs) -> subs
-            .mapNotNull { it.score.toDoubleOrNull() } }
 }

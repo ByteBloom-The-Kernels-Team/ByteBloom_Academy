@@ -1,49 +1,49 @@
 package domain.strategy.attendance
 
+import domain.filter.filterByIds
+import domain.mapper.mapByMenteeId
+import domain.mapper.weeklyStatusOrEmpty
 import domain.model.Attendance
 import domain.model.MenteeAttendance
 import domain.model.Mentee
-import domain.model.Team
+import domain.repository.AttendanceRepository
+import domain.repository.MenteeRepository
+import domain.repository.TeamRepository
 
-class TeamAttendanceReportByWeek : TeamAttendanceReportStrategy {
+class TeamAttendanceReportByWeek(
+    private val teamRepository: TeamRepository,
+    private val menteeRepository: MenteeRepository,
+    private val attendanceRepository: AttendanceRepository
+) : TeamAttendanceReportStrategy {
 
-    override fun generateReport(
-        teams: List<Team>,
-        mentees: List<Mentee>,
-        attendances: List<Attendance>
-    ): Map<String, List<MenteeAttendance>> {
+    override fun generateReport(): Map<String, List<MenteeAttendance>> {
 
-        val attendanceMap = mapAttendances(attendances)
+        val attendanceMap = attendanceRepository.getAllAttendances()
+            .mapByMenteeId()
 
-        return teams.associate { team ->
-            team.name to buildTeamReport(
-                teamMentees = filterTeamMentees(team.id, mentees),
-                attendanceMap = attendanceMap
-            )
+        val allMentees = menteeRepository.getAllMentees()
+        val allTeams = teamRepository.getAllTeams()
+
+        return allTeams.associate { team ->
+            val teamMentees = allMentees.filterByIds(listOf(team.id))
+            team.name to buildTeamReport(teamMentees, attendanceMap)
         }
     }
-
-    private fun mapAttendances(attendances: List<Attendance>) =
-        attendances.associateBy { it.menteeId }
-
-    private fun filterTeamMentees(teamId: String, mentees: List<Mentee>) =
-        mentees.filter { it.team == teamId }
 
     private fun buildTeamReport(
         teamMentees: List<Mentee>,
         attendanceMap: Map<String, Attendance>
-    ) = teamMentees.map { mentee ->
+    ) =
+        teamMentees.map { mentee ->
         buildMenteeAttendance(mentee, attendanceMap)
     }
 
     private fun buildMenteeAttendance(
         mentee: Mentee,
         attendanceMap: Map<String, Attendance>
-    ): MenteeAttendance {
-        val attendance = attendanceMap[mentee.id]
-        return MenteeAttendance(
-            menteeName = mentee.name,
-            weekStatuses = attendance?.weeklyStatus ?: emptyList()
-        )
-    }
+    ) =
+        MenteeAttendance(
+        menteeName = mentee.name,
+        weekStatuses = attendanceMap[mentee.id]?.weeklyStatusOrEmpty() ?: emptyList()
+    )
 }

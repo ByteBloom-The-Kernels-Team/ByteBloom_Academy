@@ -1,18 +1,23 @@
 package domain.strategy.attendance
 
-import domain.model.Attendance
-import domain.model.AttendanceStatus
+import domain.filter.filterByIds
+import domain.filter.withPoorAttendance
+import domain.mapper.mapToMenteeIds
+import domain.model.Mentee
+import domain.repository.AttendanceRepository
+import domain.repository.MenteeRepository
 
-class PoorAttendanceByWeek : AttendanceStrategy {
+class PoorAttendanceByWeek(
+    private val attendanceRepository: AttendanceRepository,
+    private val menteeRepository: MenteeRepository
+) : AttendanceStrategy {
 
-    override fun getAttendance(attendances: List<Attendance>): List<String> {
-        return attendances
-            .filter { hasPoorAttendance(it) }
-            .map { it.menteeId }
-    }
+    override fun getAttendance(): List<Mentee> {
+        val menteeIds = attendanceRepository.getAllAttendances()
+            .withPoorAttendance()
+            .mapToMenteeIds()
 
-    private fun hasPoorAttendance(attendance: Attendance): Boolean {
-        return attendance.weeklyStatus
-            .any { it != AttendanceStatus.PRESENT }
+        return menteeRepository.getAllMentees()
+            .filterByIds(menteeIds.toList())
     }
 }

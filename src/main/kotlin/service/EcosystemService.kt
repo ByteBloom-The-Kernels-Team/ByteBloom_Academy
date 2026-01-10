@@ -1,95 +1,57 @@
 package service
 
-import domain.strategy.performance.AnalyzePerformanceByType
-import domain.strategy.team.MentorPerTeam
-import domain.strategy.project.ProjectByTeamId
 import domain.strategy.team.TeamSelectionStrategy
-import domain.strategy.performance.AverageTeamPerformance
-import domain.strategy.attendance.PerfectAttendanceByWeek
-import domain.strategy.attendance.PoorAttendanceByWeek
-import domain.strategy.attendance.TeamAttendanceReportByWeek
 import domain.model.Mentee
 import domain.model.MenteeAttendance
 import domain.model.Project
 import domain.model.Team
 import domain.model.SubmissionType
-import domain.repository.AttendanceRepository
-import domain.repository.MenteeRepository
-import domain.repository.PerformanceSubmissionRepository
-import domain.repository.ProjectRepository
-import domain.repository.TeamRepository
+import domain.strategy.attendance.AttendanceStrategy
+import domain.strategy.attendance.TeamAttendanceReportStrategy
+import domain.strategy.performance.MenteePerformanceAnalyzer
+import domain.strategy.performance.TeamPerformanceStrategy
+import domain.strategy.performance.TopScoringMenteeStrategy
+import domain.strategy.project.ProjectSelectionStrategy
+import domain.strategy.team.MentorSearchStrategy
 
-class EcosystemService(
-    private val teamRepository: TeamRepository,
-    private val menteeRepository: MenteeRepository,
-    private val projectRepository: ProjectRepository,
-    private val attendanceRepository: AttendanceRepository,
-    private val performanceRepository: PerformanceSubmissionRepository
-) {
+class EcosystemService {
     fun findTeamsWithoutProjects(
         teamSelectionStrategy: TeamSelectionStrategy
-    ): List<Team> {
-        val allTeams = teamRepository.getAllTeams()
-        val allProjects = projectRepository.getAllProjects()
+    ): List<Team> = teamSelectionStrategy.selectTeams()
 
-        return teamSelectionStrategy.selectTeams(allTeams, allProjects)
-    }
+    fun findProjectAssignedToTeam(
+        teamId: String,
+        projectSelectionStrategy: ProjectSelectionStrategy
+    ): Project? = projectSelectionStrategy.findProjectForTeam(teamId)
 
-    fun findProjectAssignedToTeam(teamId: String): Project? {
-        val projects = projectRepository.getAllProjects()
-        val projectByTeamId = ProjectByTeamId()
+    fun findLeadMentorForMentee(
+        menteeId: String,
+        mentorSearchStrategy: MentorSearchStrategy
+    ): String? = mentorSearchStrategy.findMentorForMentee(menteeId)
 
-        return projectByTeamId.findProjectForTeam(teamId, projects)
-    }
+    fun getTeamPerformanceAverage(
+        teamId: String,
+        teamPerformance: TeamPerformanceStrategy
+    ): Double = teamPerformance.calculateAverage(teamId)
 
-    fun findLeadMentorForMentee(menteeId: String): String? {
-        val mentees = menteeRepository.getAllMentees()
-        val teams = teamRepository.getAllTeams()
-        val mentorPerTeam = MentorPerTeam()
+    fun getPerformanceBreakdownForMentee(
+        menteeId: String,
+        performanceAnalyzer: MenteePerformanceAnalyzer
+    ): Map<SubmissionType, List<Double>> = performanceAnalyzer.menteeAnalyze(menteeId)
 
-        return mentorPerTeam.findMentorForMentee(menteeId, mentees, teams)
-    }
+    fun getMenteesWithPerfectAttendance(
+        attendanceStrategy: AttendanceStrategy
+    ): List<Mentee> = attendanceStrategy.getAttendance()
 
-    fun getTeamPerformanceAverage(teamId: String): Double {
-        val mentees = menteeRepository.getAllMentees()
-        val performances = performanceRepository.getAllPerformanceSubmissions()
-        val averageTeamPerformance = AverageTeamPerformance()
+    fun getMenteesWithPoorAttendance(
+        attendanceStrategy: AttendanceStrategy
+    ): List<Mentee> = attendanceStrategy.getAttendance()
 
-        return averageTeamPerformance.calculateAverage(teamId, mentees, performances)
-    }
+    fun generateTeamAttendanceReport(
+        reportStrategy: TeamAttendanceReportStrategy
+    ): Map<String, List<MenteeAttendance>> = reportStrategy.generateReport()
 
-    fun getPerformanceBreakdownForMentee(menteeId: String): Map<SubmissionType, List<Double>> {
-        val performances = performanceRepository.getAllPerformanceSubmissions()
-        val analyzePerformanceByType = AnalyzePerformanceByType()
-
-        return analyzePerformanceByType.menteeAnalyze(menteeId, performances)
-    }
-
-    fun getMenteesWithPerfectAttendance(): List<Mentee> {
-        val attendances = attendanceRepository.getAllAttendances()
-        val perfectAttendanceByWeek = PerfectAttendanceByWeek()
-        val prefectIDs = perfectAttendanceByWeek.getAttendance(attendances)
-        val mentees = menteeRepository.getAllMentees()
-
-        return mentees.filter { it.id in prefectIDs }
-    }
-
-    fun getMenteesWithPoorAttendance(): List<Mentee> {
-        val attendances = attendanceRepository.getAllAttendances()
-        val poorAttendanceByWeek = PoorAttendanceByWeek()
-        val poorIds = poorAttendanceByWeek.getAttendance(attendances)
-        val mentees = menteeRepository.getAllMentees()
-
-        return mentees.filter { it.id in poorIds }
-    }
-
-    fun generateTeamAttendanceReport(): Map<String, List<MenteeAttendance>> {
-        val teams = teamRepository.getAllTeams()
-        val mentees = menteeRepository.getAllMentees()
-        val attendances = attendanceRepository.getAllAttendances()
-        val teamAttendanceReportByWeek = TeamAttendanceReportByWeek()
-
-        return teamAttendanceReportByWeek.generateReport(teams, mentees, attendances)
-    }
-
+    fun getTopScoringMentee(
+        topScoringMenteeStrategy: TopScoringMenteeStrategy
+    ): Mentee? = topScoringMenteeStrategy.findTopMentee()
 }

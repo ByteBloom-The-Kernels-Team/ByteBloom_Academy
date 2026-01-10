@@ -1,7 +1,7 @@
 package domain.strategy.attendance
 
-import domain.model.Attendance
+import domain.model.Mentee
 
 interface AttendanceStrategy {
-    fun getAttendance(attendances: List<Attendance>): List<String>
+    fun getAttendance(): List<Mentee>
 }
