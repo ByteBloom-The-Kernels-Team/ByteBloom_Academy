@@ -12,3 +12,8 @@ fun List<Mentee>.filterByName(query: String): List<Mentee> =
     this.filter { mentee ->
         mentee.name.contains(query, ignoreCase = true)
     }
+
+fun List<Mentee>.filterTopByOverallScore(limit: Int): List<Mentee> =
+    this.sortedByDescending { mentee ->
+        mentee.submissions.sumOf { it.score.toIntOrNull() ?: 0 }
+    }.take(limit)
