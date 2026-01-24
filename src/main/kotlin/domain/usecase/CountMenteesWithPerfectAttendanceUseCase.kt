@@ -1,11 +1,15 @@
 package domain.usecase
 
-import domain.strategy.attendance.AttendanceStrategy
+import domain.repository.AttendanceRepository
+import domain.model.AttendanceStatus
 
 class CountMenteesWithPerfectAttendanceUseCase(
-    private val attendanceStrategy: AttendanceStrategy
+    private val attendanceRepository: AttendanceRepository
 ) {
+
     operator fun invoke(): Int =
-        attendanceStrategy.getAttendance()
-            .count()
+        attendanceRepository.getAllAttendances()
+            .count { attendance ->
+                attendance.weeklyStatus.all { it == AttendanceStatus.PRESENT }
+            }
 }
