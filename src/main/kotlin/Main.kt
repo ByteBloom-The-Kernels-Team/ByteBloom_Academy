@@ -8,7 +8,6 @@ import domain.strategy.project.ProjectByTeamId
 import domain.strategy.team.MentorPerTeam
 import domain.strategy.attendance.PerfectAttendanceByWeek
 import domain.strategy.attendance.PoorAttendanceByWeek
-import service.EcosystemService
 
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
