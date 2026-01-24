@@ -1,13 +1,10 @@
 import data.datasource.CsvEcosystemDataSource
 import data.repository.AttendanceRepositoryImplementation
 import data.repository.MenteeRepositoryImplementation
-import data.repository.ProjectRepositoryImplementation
+import data.repository.PerformanceSubmissionRepositoryImplementation
 import data.repository.TeamRepositoryImplementation
-import domain.strategy.team.TeamsWithoutProject
-import domain.strategy.project.ProjectByTeamId
-import domain.strategy.team.MentorPerTeam
-import domain.strategy.attendance.PerfectAttendanceByWeek
-import domain.strategy.attendance.PoorAttendanceByWeek
+import data.repository.ProjectRepositoryImplementation
+import domain.usecase.*
 
 fun main() {
     println("ByteBloom Academy: Ecosystem Project Starter")
@@ -15,47 +12,48 @@ fun main() {
 
     val dataSource = CsvEcosystemDataSource()
 
+
     val menteeRepository = MenteeRepositoryImplementation(dataSource)
     val teamRepository = TeamRepositoryImplementation(dataSource)
-    val projectRepository = ProjectRepositoryImplementation(dataSource)
+    val performanceRepository = PerformanceSubmissionRepositoryImplementation(dataSource)
     val attendanceRepository = AttendanceRepositoryImplementation(dataSource)
+    val projectRepository = ProjectRepositoryImplementation(dataSource)
 
-    val ecosystemService = EcosystemService()
-
-    val menteeId = "m002"
     val teamId = "t001"
+    val teamName = "Team Alpha"
 
-    println("\nTesting 5 Features:")
+    println("\nTesting 5 Use Cases:")
     println("-------------------------------------------------------")
 
-    println("1) Teams Without Projects:")
-    val strategy = TeamsWithoutProject(teamRepository, projectRepository)
-    val teamsWithoutProjects = ecosystemService.findTeamsWithoutProjects(strategy)
-    println("• ${teamsWithoutProjects.joinToString { it.name }}")
+
+    val perfectAttendanceUC = CountMenteesWithPerfectAttendanceUseCase(attendanceRepository)
+    val perfectCount = perfectAttendanceUC()
+    println("1) Mentees with perfect attendance: $perfectCount")
     println("-------------------------------------------------------")
 
-    println("2) Project Assigned to Team ($teamId):")
-    val projectStrategy = ProjectByTeamId(projectRepository)
-    val project = ecosystemService.findProjectAssignedToTeam(teamId, projectStrategy)
-    println("• ${project?.title ?: "No Project Assigned"}")
+
+    val getAllMenteesUC = GetAllMenteesUseCase(menteeRepository)
+    val allMentees = getAllMenteesUC()
+    println("2) All Mentees: ${allMentees.joinToString()}")
     println("-------------------------------------------------------")
 
-    println("3) Lead Mentor for Mentee ($menteeId):")
-    val mentorStrategy = MentorPerTeam(menteeRepository, teamRepository)
-    val mentor = ecosystemService.findLeadMentorForMentee(menteeId, mentorStrategy)
-    println("• ${mentor ?: "Not Assigned"}")
+
+    val teamsNoProjectUC = FindTeamsWithNoProjectUseCase(teamRepository, projectRepository)
+    val teamsWithoutProject = teamsNoProjectUC()
+    println("3) Teams without projects: ${teamsWithoutProject.joinToString { it.name }}")
     println("-------------------------------------------------------")
 
-    println("4) Mentees With Perfect Attendance:")
-    val perfectStrategy = PerfectAttendanceByWeek(attendanceRepository, menteeRepository)
-    val perfect = ecosystemService.getMenteesWithPerfectAttendance(perfectStrategy)
-    println("• ${if (perfect.isEmpty()) "None" else perfect.joinToString { it.name }}")
+
+    val teamNamesUC = GetTeamNamesUseCase(teamRepository)
+    val teamNames = teamNamesUC()
+    println("4) Team Names: ${teamNames.joinToString()}")
     println("-------------------------------------------------------")
 
-    println("5) Mentees With Poor Attendance:")
-    val poorStrategy = PoorAttendanceByWeek(attendanceRepository, menteeRepository)
-    val poor = ecosystemService.getMenteesWithPoorAttendance(poorStrategy)
-    println("• ${if (poor.isEmpty()) "None" else poor.joinToString { it.name }}")
+
+    val searchMenteesUC = SearchMenteesByTeamNameUseCase(menteeRepository)
+    val menteesInTeam = searchMenteesUC(teamName)
+    println("5) Mentees in team '$teamName': ${menteesInTeam.joinToString { it.name }}")
     println("-------------------------------------------------------")
+
+    println("All 5 Use Cases executed successfully.")
 }
-
