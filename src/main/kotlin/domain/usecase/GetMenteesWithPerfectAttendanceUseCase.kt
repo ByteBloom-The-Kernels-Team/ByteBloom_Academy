@@ -4,19 +4,19 @@ import domain.model.Attendance
 import domain.model.AttendanceStatus
 import domain.repository.AttendanceRepository
 
-class GetMenteesWithFullAttendanceUseCase(
+class GetMenteesWithPerfectAttendanceUseCase(
     private val attendanceRepository: AttendanceRepository
 ) {
     operator fun invoke(): List<String> {
         val attendanceList = attendanceRepository.getAllAttendances()
-        return filterFullAttendance(attendanceList)
+        return filterPerfectAttendance(attendanceList)
     }
 
-    private fun filterFullAttendance(attendanceList: List<Attendance>): List<String> =
+    private fun filterPerfectAttendance(attendanceList: List<Attendance>): List<String> =
         attendanceList
-            .filter { hasFullAttendance(it.weeklyStatus) }
+            .filter { hasPerfectAttendance(it.weeklyStatus) }
             .map { it.menteeId }
 
-    private fun hasFullAttendance(weeks: List<AttendanceStatus>): Boolean =
+    private fun hasPerfectAttendance(weeks: List<AttendanceStatus>): Boolean =
         weeks.all { it == AttendanceStatus.PRESENT }
 }
