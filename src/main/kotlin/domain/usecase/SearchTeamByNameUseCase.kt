@@ -2,14 +2,15 @@ package domain.usecase
 
 import domain.model.Team
 import domain.repository.TeamRepository
-import domain.strategy.team.TeamSearchStrategy
 
 class SearchTeamByNameUseCase(
-    private val teamRepository: TeamRepository,
-    private val searchStrategy: TeamSearchStrategy
+    private val teamRepository: TeamRepository
 ) {
     operator fun invoke(name: String): Team? {
-        val allTeams = teamRepository.getAllTeams()
-        return searchStrategy.search(allTeams, name)
+        return teamRepository.getAllTeams().findByName(teamName)
     }
+}
+
+private fun List<Team>.findByName(name: String): Team? {
+    return this.find { it.name.equals(name, ignoreCase = true) }
 }
