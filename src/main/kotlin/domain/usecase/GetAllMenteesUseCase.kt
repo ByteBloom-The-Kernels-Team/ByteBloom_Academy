@@ -1,4 +1,11 @@
 package domain.usecase
 
-class GetAllMenteesUseCase {
+import domain.repository.MenteeRepository
+
+class GetAllMenteesUseCase(
+    private val menteeRepository: MenteeRepository
+) {
+    operator fun invoke(): List<String> =
+        menteeRepository.getAllMentees()
+            .map { it.name }
 }
