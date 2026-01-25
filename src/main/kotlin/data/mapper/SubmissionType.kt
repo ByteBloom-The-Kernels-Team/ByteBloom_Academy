@@ -4,5 +4,5 @@ import domain.model.SubmissionType
 
 fun String.toSubmissionType(): SubmissionType {
     return SubmissionType
-        .valueOf(uppercase())
+        .valueOf(uppercase().trim())
 }
