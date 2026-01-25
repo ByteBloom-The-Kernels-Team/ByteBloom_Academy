@@ -14,7 +14,6 @@ fun main() {
 
     val menteeRepository = MenteeRepositoryImplementation(dataSource)
     val teamRepository = TeamRepositoryImplementation(dataSource)
-    val performanceRepository = PerformanceSubmissionRepositoryImplementation(dataSource)
     val attendanceRepository = AttendanceRepositoryImplementation(dataSource)
     val projectRepository = ProjectRepositoryImplementation(dataSource)
 
