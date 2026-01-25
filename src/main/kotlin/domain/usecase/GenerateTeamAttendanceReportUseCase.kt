@@ -13,7 +13,7 @@ class GenerateTeamAttendanceReportUseCase(
     private val menteeRepository: MenteeRepository,
     private val attendanceRepository: AttendanceRepository
 ) {
-    operator fun invoke(): Map<String, List<MenteeAttendance>> {
+    operator fun invoke(): Map<String, List<MenteeAttendance>>{
         val allTeams = teamRepository.getAllTeams()
         val allMentees = menteeRepository.getAllMentees()
         val allAttendance = attendanceRepository.getAllAttendances()
