@@ -66,13 +66,10 @@ fun main() {
     }
     println("-------------------------------------------------------")
 
-    println("8) Team Performance Average")
-    val avgPerformanceUseCase = GetPerformanceAverageForATeam(
-        menteeRepository,
-        performanceRepository
-    )
-    val averageScore = avgPerformanceUseCase(teamId)
-    println("Average Performance for Team ($teamId): ${averageScore ?: "No scores available"}")
+    println("8)Get All mentors.")
+    val mentorsUseCase = GetAllMentorsUseCase(teamRepository)
+    val mentorsList = mentorsUseCase()
+    println("List of Mentors: ${mentorsList.distinct().joinToString()}")
     println("-------------------------------------------------------")
 
     println("9) Mentees with perfect scores counted")
