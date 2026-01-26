@@ -12,7 +12,7 @@ class FindLeadMentorForMenteeUseCase(
             .firstOrNull { it.id == menteeId } ?: return null
 
         val team = teamRepository.getAllTeams()
-            .firstOrNull { it.id == mentee.team } ?: return null
+            .firstOrNull { it.id == mentee.teamId } ?: return null
 
         return team.mentor
     }

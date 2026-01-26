@@ -14,7 +14,7 @@ class GetPerformanceAverageForATeam(
 
     private fun getMenteeIdsForTeam(teamId: String) =
         menteeRepository.getAllMentees()
-            .filter { it.team == teamId }
+            .filter { it.teamId == teamId }
             .map { it.id }
 
     private fun getPerformanceScoresForTeam(teamId: String): List<Double> {

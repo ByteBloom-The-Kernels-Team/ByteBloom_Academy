@@ -13,6 +13,10 @@ class CountMenteesWithPerfectScoreUseCase(
 
     private fun countPerfectScores(mentees: List<Mentee>): Int =
         mentees.count { mentee ->
-            mentee.submissions.any { it.score == "100" }
+            mentee.submissions.any { it.score == PERFECT_SCORE }
         }
+
+    companion object{
+        private const val PERFECT_SCORE = 100
+    }
 }

@@ -8,6 +8,6 @@ fun PerformanceRaw.toDomainModel(): PerformanceSubmission {
         id = id,
         menteeId = menteeId ,
         type = type.toSubmissionType(),
-        score = score
+        score = score.toIntOrNull() ?: 0
     )
 }

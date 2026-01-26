@@ -12,9 +12,9 @@ class CountMenteesWithPoorAttendanceUseCase(
         return allAttendance.countPoorStatus()
     }
 
-    private fun List<Attendance>.countPoorStatus(): Int {
-        return this.count { attendance ->
+    private fun List<Attendance>.countPoorStatus(): Int =
+        count { attendance ->
             attendance.weeklyStatus.any { it != AttendanceStatus.PRESENT }
         }
-    }
+
 }

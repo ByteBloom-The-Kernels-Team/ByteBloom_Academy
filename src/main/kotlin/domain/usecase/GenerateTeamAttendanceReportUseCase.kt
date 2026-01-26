@@ -1,6 +1,7 @@
 package domain.usecase
 
 import domain.model.Attendance
+import domain.model.AttendanceStatus
 import domain.model.Mentee
 import domain.model.Team
 import domain.model.MenteeAttendance
@@ -13,15 +14,19 @@ class GenerateTeamAttendanceReportUseCase(
     private val menteeRepository: MenteeRepository,
     private val attendanceRepository: AttendanceRepository
 ) {
-    operator fun invoke(): Map<String, List<MenteeAttendance>>{
-        val allTeams = teamRepository.getAllTeams()
-        val allMentees = menteeRepository.getAllMentees()
-        val allAttendance = attendanceRepository.getAllAttendances()
-        val attendanceMap = allAttendance.mapToAttendanceById()
-        return allTeams.associateTeamsWithAttendance(allMentees, attendanceMap)
+    operator fun invoke(): Map<String, List<Map<String, MutableList<AttendanceStatus>>>> {
+        return teamRepository.getAllTeams()
+            .associateBy({ it.id }) { team -> associateTeamWithMenteeWeeklyStatuses(team) }
     }
 
-    private fun List<Attendance>.mapToAttendanceById(): Map<String, Attendance> {
+    private fun associateTeamWithMenteeWeeklyStatuses(team: Team): List<Map<String, MutableList<AttendanceStatus>>> =
+        attendanceRepository.getAllAttendances().filter { attendance ->
+            attendance.menteeId in team.menteeIds
+        }.map { attendance ->
+            mapOf(attendance.menteeId to attendance.weeklyStatus)
+        }
+
+    private fun List<Attendance>.associateTeamIdWithAttendance(): Map<String, Attendance> {
         return this.associateBy { it.menteeId }
     }
 
@@ -36,7 +41,7 @@ class GenerateTeamAttendanceReportUseCase(
     }
 
     private fun List<Mentee>.filterByTeamId(teamId: String): List<Mentee> {
-        return this.filter { it.team == teamId }
+        return this.filter { it.teamId == teamId }
     }
 
     private fun List<Mentee>.toMenteeAttendanceList(
