@@ -17,7 +17,7 @@ class GetTopMenteesByOverallScoreUseCase(
     ): List<Mentee> =
         mentees
             .sortedByDescending { mentee ->
-                mentee.submissions.sumOf { it.score.toIntOrNull() ?: 0 }
+                mentee.submissions.sumOf { it.score }
             }
             .take(limit)
 }
