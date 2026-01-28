@@ -6,6 +6,10 @@ import domain.repository.MenteeRepository
 class CountMenteesWithPerfectScoreUseCase(
     private val menteeRepository: MenteeRepository
 ) {
+    companion object {
+        private const val PERFECT_SCORE = 100.0
+    }
+
     operator fun invoke(): Int {
         val mentees = menteeRepository.getAllMentees()
         return countPerfectScores(mentees)
@@ -13,6 +17,6 @@ class CountMenteesWithPerfectScoreUseCase(
 
     private fun countPerfectScores(mentees: List<Mentee>): Int =
         mentees.count { mentee ->
-            mentee.submissions.any { it.score == "100" }
+            mentee.submissions.any { it.score == PERFECT_SCORE }
         }
 }
