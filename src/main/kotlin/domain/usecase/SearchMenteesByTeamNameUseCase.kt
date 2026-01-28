@@ -16,6 +16,6 @@ class SearchMenteesByTeamNameUseCase(
         teamName: String
     ): List<Mentee> =
         mentees.filter { mentee ->
-            mentee.team?.equals(teamName, ignoreCase = true) == true
+            mentee.teamId?.equals(teamName, ignoreCase = true) == true
         }
 }

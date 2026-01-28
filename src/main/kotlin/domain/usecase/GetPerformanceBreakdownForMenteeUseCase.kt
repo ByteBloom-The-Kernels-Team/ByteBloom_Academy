@@ -19,7 +19,7 @@ class GetPerformanceBreakdownForMenteeUseCase(
     ): Map<SubmissionType, List<Double>> {
         return submissions.groupBy { it.type }
             .mapValues { entry ->
-                entry.value.mapNotNull { it.score.toDoubleOrNull() }
+                entry.value.mapNotNull { it.score }
             }
     }
 

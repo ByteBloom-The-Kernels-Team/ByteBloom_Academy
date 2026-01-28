@@ -3,6 +3,6 @@ package domain.model
 data class Mentee(
     val id: String,
     val name: String,
-    val team: String?,
+    val teamId: String?,
     val submissions: List<PerformanceSubmission>
 )

@@ -36,7 +36,7 @@ class GenerateTeamAttendanceReportUseCase(
     }
 
     private fun List<Mentee>.filterByTeamId(teamId: String): List<Mentee> {
-        return this.filter { it.team == teamId }
+        return this.filter { it.teamId == teamId }
     }
 
     private fun List<Mentee>.toMenteeAttendanceList(

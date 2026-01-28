@@ -7,7 +7,7 @@ fun MenteeRaw.toDomainModel(): Mentee {
     return Mentee(
         id = id,
         name = name,
-        team = teamId,
+        teamId = teamId,
         submissions = emptyList()
     )
 }
