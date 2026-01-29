@@ -8,25 +8,14 @@ class GetPerformanceBreakdownForMenteeUseCase(
     private val performanceSubmissionRepository: PerformanceSubmissionRepository
 ) {
     operator fun invoke(menteeId: String): Map<SubmissionType, List<Double>> {
-        val allPerformances = performanceSubmissionRepository.getAllPerformanceSubmissions()
-        val filteredPerformances = filterByMentee(allPerformances, menteeId)
-
-        return mapScoresByType(filteredPerformances)
-    }
-
-    private fun mapScoresByType(
-        submissions: List<PerformanceSubmission>
-    ): Map<SubmissionType, List<Double>> {
-        return submissions.groupBy { it.type }
-            .mapValues { entry ->
-                entry.value.mapNotNull { it.score }
+        return performanceSubmissionRepository.getAllPerformanceSubmissions()
+            .asSequence()
+            .filter { it.menteeId == menteeId }
+            .groupBy { it.type }
+            .mapValues { (_, submissions) ->
+                extractScores(submissions)
             }
     }
 
-    private fun filterByMentee(
-        submissions: List<PerformanceSubmission>,
-        menteeId: String
-    ): List<PerformanceSubmission> =
-         submissions.filter { it.menteeId == menteeId }
-
+    private fun extractScores(submissions: List<PerformanceSubmission>): List<Double> = submissions.mapNotNull { it.score }
 }
