@@ -3,19 +3,22 @@ package domain.usecase
 import domain.model.Mentee
 import domain.repository.MenteeRepository
 
-class SearchMenteesByTeamNameUseCase(
+class SearchMenteesByTeamIdUseCase(
     private val menteeRepository: MenteeRepository
 ) {
-    operator fun invoke(teamName: String): List<Mentee> {
+    operator fun invoke(teamId: String): List<Mentee> {
         val mentees = menteeRepository.getAllMentees()
-        return filterByTeamName(mentees, teamName)
+        return findMenteesByTeamId(mentees, teamId)
     }
 
-    private fun filterByTeamName(
+    private fun findMenteesByTeamId(
         mentees: List<Mentee>,
-        teamName: String
+        teamId: String
     ): List<Mentee> =
-        mentees.filter { mentee ->
-            mentee.teamId?.equals(teamName, ignoreCase = true) == true
-        }
+        mentees
+            .asSequence()
+            .filter { mentee ->
+                mentee.teamId?.equals(teamId, ignoreCase = true) == true
+            }
+            .toList()
 }

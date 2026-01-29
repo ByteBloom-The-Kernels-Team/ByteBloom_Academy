@@ -42,9 +42,9 @@ fun main() {
     println("4) Team Names: ${teamNames.joinToString()}")
     println("-------------------------------------------------------")
 
-    val searchMenteesUC = SearchMenteesByTeamNameUseCase(menteeRepository)
-    val menteesInTeam = searchMenteesUC(teamName)
-    println("5) Mentees in team '$teamName': ${menteesInTeam.joinToString { it.name }}")
+    val searchMenteesUC = SearchMenteesByTeamIdUseCase(menteeRepository)
+    val menteesInTeam = searchMenteesUC(teamId)
+    println("5) Mentees in team '$teamId': ${menteesInTeam.joinToString { it.name }}")
     println("-------------------------------------------------------")
 
     val findProjectUseCase = FindProjectByTeamIdUseCase(projectRepository)
