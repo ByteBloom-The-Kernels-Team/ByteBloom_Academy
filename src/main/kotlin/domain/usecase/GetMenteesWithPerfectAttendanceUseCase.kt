@@ -14,8 +14,10 @@ class GetMenteesWithPerfectAttendanceUseCase(
 
     private fun filterPerfectAttendance(attendanceList: List<Attendance>): List<String> =
         attendanceList
+            .asSequence()
             .filter { hasPerfectAttendance(it.weeklyStatus) }
             .map { it.menteeId }
+            .toList()
 
     private fun hasPerfectAttendance(weeks: List<AttendanceStatus>): Boolean =
         weeks.all { it == AttendanceStatus.PRESENT }
