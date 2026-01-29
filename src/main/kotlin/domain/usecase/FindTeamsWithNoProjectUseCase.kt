@@ -10,14 +10,14 @@ class FindTeamsWithNoProjectUseCase(
 ) {
     operator fun invoke(): List<Team> {
         val allTeams = teamRepository.getAllTeams()
-        val teamIdsWithProjects = findTeamIdsWithProjects()
+        val allProjectsAssignedTeamIds = findProjectsAssignedTeamIds()
 
         return allTeams.filterNot { team ->
-            team.id in teamIdsWithProjects
+            team.id in allProjectsAssignedTeamIds
         }
     }
 
-    private fun findTeamIdsWithProjects(): Set<String> {
+    private fun findProjectsAssignedTeamIds(): Set<String> {
         return projectRepository.getAllProjects()
             .map { it.teamId }
             .toSet()
