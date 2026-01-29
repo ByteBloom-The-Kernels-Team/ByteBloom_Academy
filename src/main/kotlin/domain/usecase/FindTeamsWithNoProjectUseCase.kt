@@ -12,13 +12,16 @@ class FindTeamsWithNoProjectUseCase(
         val allTeams = teamRepository.getAllTeams()
         val allProjectsAssignedTeamIds = findProjectsAssignedTeamIds()
 
-        return allTeams.filterNot { team ->
-            team.id in allProjectsAssignedTeamIds
-        }
+        return allTeams
+            .asSequence()
+            .filterNot { team ->
+                team.id in allProjectsAssignedTeamIds
+            }.toList()
     }
 
     private fun findProjectsAssignedTeamIds(): Set<String> {
         return projectRepository.getAllProjects()
+            .asSequence()
             .map { it.teamId }
             .toSet()
     }
