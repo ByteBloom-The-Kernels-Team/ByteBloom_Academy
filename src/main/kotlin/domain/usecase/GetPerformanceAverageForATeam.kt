@@ -14,6 +14,7 @@ class GetPerformanceAverageForATeam(
 
     private fun getMenteeIdsForTeam(teamId: String) =
         menteeRepository.getAllMentees()
+            .asSequence()
             .filter { it.teamId == teamId }
             .map { it.id }
 
@@ -21,7 +22,9 @@ class GetPerformanceAverageForATeam(
         val teamMenteeIds = getMenteeIdsForTeam(teamId)
 
         return performanceRepository.getAllPerformanceSubmissions()
+            .asSequence()
             .filter { it.menteeId in teamMenteeIds }
             .mapNotNull { it.score}
+            .toList()
     }
 }
