@@ -16,5 +16,4 @@ class CountMenteesWithPoorAttendanceUseCase(
         count { attendance ->
             attendance.weeklyStatus.any { it != AttendanceStatus.PRESENT }
         }
-
 }
