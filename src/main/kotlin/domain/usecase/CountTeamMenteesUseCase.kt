@@ -2,7 +2,7 @@ package domain.usecase
 
 import domain.repository.MenteeRepository
 
-class FindCountMenteesInTeamUseCase(
+class CountTeamMenteesUseCase(
     private val menteeRepository: MenteeRepository,
 ) {
     operator fun invoke(teamId: String): Int {
