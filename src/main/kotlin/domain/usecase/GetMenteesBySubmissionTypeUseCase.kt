@@ -9,14 +9,17 @@ class GetMenteesBySubmissionTypeUseCase(
 ) {
     operator fun invoke(type: SubmissionType): List<Mentee> {
         val mentees = menteeRepository.getAllMentees()
-        return filterBySubmissionType(mentees, type)
+        return findMenteesBySubmissionType(mentees, type)
     }
 
-    private fun filterBySubmissionType(
+    private fun findMenteesBySubmissionType(
         mentees: List<Mentee>,
         type: SubmissionType
     ): List<Mentee> =
-        mentees.filter { mentee ->
-            mentee.submissions.any { it.type == type }
-        }
+        mentees
+            .asSequence()
+            .filter { mentee ->
+                mentee.submissions.any { it.type == type }
+            }
+            .toList()
 }
