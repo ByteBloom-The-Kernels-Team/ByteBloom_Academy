@@ -55,12 +55,17 @@ fun main() {
     println("7) Team attendance report")
     val reportUseCase = GenerateTeamAttendanceReportUseCase(
         teamRepository,
-        menteeRepository,
-        attendanceRepository)
+        attendanceRepository
+    )
     val report = reportUseCase()
-    report.forEach { (teamName, mentees) ->
+
+    report.forEach { (teamName, menteesData) ->
         println("Team: $teamName")
-        mentees.forEach { println(" - ${it.menteeName}: ${it.weekStatuses}") }
+        menteesData.forEach { menteeMap ->
+            menteeMap.forEach { (menteeId, weekStatuses) ->
+                println(" - $menteeId: $weekStatuses")
+            }
+        }
     }
     println("-------------------------------------------------------")
 
