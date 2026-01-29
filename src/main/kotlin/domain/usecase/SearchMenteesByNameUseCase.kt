@@ -8,12 +8,15 @@ class SearchMenteesByNameUseCase(
 ) {
     operator fun invoke(query: String): List<Mentee> {
         val mentees = menteeRepository.getAllMentees()
-        return filterByName(mentees, query)
+        return findMenteesMatchingName(mentees, query)
     }
 
-    private fun filterByName(
+    private fun findMenteesMatchingName(
         mentees: List<Mentee>,
         query: String
     ): List<Mentee> =
-        mentees.filter { it.name.contains(query, ignoreCase = true) }
+        mentees
+            .asSequence()
+            .filter { it.name.contains(query, ignoreCase = true) }
+            .toList()
 }
