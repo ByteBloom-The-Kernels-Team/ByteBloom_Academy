@@ -12,8 +12,10 @@ class GenerateTeamAttendanceReportUseCase(
         val teams = teamRepository.getAllTeams()
         return teams.associate { team ->
             team.name to attendanceRepository.getAllAttendances()
+                .asSequence()
                 .filter { it.menteeId in team.menteeIds }
                 .map { mapOf(it.menteeId to it.weeklyStatus) }
+                .toList()
         }
     }
 }
