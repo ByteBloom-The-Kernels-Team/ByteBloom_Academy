@@ -14,8 +14,10 @@ class GetMenteesWithPoorAttendanceUseCase(
 
     private fun filterPoorAttendance(attendanceList: List<Attendance>): List<String> =
         attendanceList
+            .asSequence()
             .filter { isPoorAttendance(it.weeklyStatus) }
             .map { it.menteeId }
+            .toList()
 
     private fun isPoorAttendance(weeks: List<AttendanceStatus>): Boolean {
         val presentCount = weeks.count { it == AttendanceStatus.PRESENT }
