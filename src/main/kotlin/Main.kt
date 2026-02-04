@@ -17,7 +17,6 @@ fun main() {
     val projectRepository = ProjectRepositoryImplementation(dataSource)
 
     val teamId = "t001"
-    val teamName = "Team Alpha"
 
     println("\nTesting 10 Use Cases:")
     println("-------------------------------------------------------")
