@@ -42,7 +42,7 @@ fun parseMenteeData(): List<MenteeRaw> {
 
 fun parsePerformanceCsvLine(line: String): PerformanceRaw? {
     val performanceParts = validateAndSplit(line, 4) ?: return null
-    return PerformanceRaw(performanceParts[0], performanceParts[1], performanceParts[2], performanceParts[3])
+    return PerformanceRaw(performanceParts[0], performanceParts[1], performanceParts[2].toDouble(), performanceParts[3])
 }
 
 fun parsePerformanceData(): List<PerformanceRaw> {
